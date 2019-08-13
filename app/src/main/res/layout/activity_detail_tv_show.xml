@@ -140,7 +140,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/genre"
+        android:text="@string/rating"
         android:textColor="#090909"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -151,7 +151,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/genre"
+        android:id="@+id/rating"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -176,18 +176,18 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/director"
+        android:text="@string/popularity"
         android:textColor="#FA070707"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/photo"
-        app:layout_constraintTop_toBottomOf="@+id/genre"
+        app:layout_constraintTop_toBottomOf="@+id/rating"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/director"
+        android:id="@+id/popularity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

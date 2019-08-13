@@ -1,4 +1,4 @@
-package com.example.moviecatalogue;
+package com.example.moviecatalogue.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,14 +11,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviecatalogue.R;
+import com.example.moviecatalogue.model.Film;
+import com.example.moviecatalogue.view.DetailMovieActivity;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.moviecatalogue.base.networks.ApiUrl.BASE_URL;
+import static com.example.moviecatalogue.base.networks.ApiUrl.PATH_MOVIE;
+import static com.example.moviecatalogue.base.networks.ApiUrl.POSTER_PATH;
 
 public class ListViewMovieAdapter extends RecyclerView.Adapter<ListViewMovieAdapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<Film> filmArrayList;
+    private List<Film> filmArrayList;
 
-    public void setFilmArrayList(ArrayList<Film> filmArrayList) {
+    public List<Film> getFilmArrayList() {
+        return filmArrayList;
+    }
+
+    public void setFilmArrayList(List<Film> filmArrayList) {
         this.filmArrayList = filmArrayList;
         notifyDataSetChanged();
     }
@@ -38,9 +52,9 @@ public class ListViewMovieAdapter extends RecyclerView.Adapter<ListViewMovieAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.txtjudul.setText(filmArrayList.get(position).getJudul());
-        holder.txtDescription.setText(filmArrayList.get(position).getDeskripsi());
-        holder.imgPhoto.setImageResource(filmArrayList.get(position).getPhoto());
+        holder.txtjudul.setText(filmArrayList.get(position).getTitle());
+        holder.txtDescription.setText(filmArrayList.get(position).getOverview());
+        Picasso.get().load(POSTER_PATH+filmArrayList.get(position).getPosterPath()).into(holder.imgPhoto);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

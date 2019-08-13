@@ -1,4 +1,4 @@
-package com.example.moviecatalogue;
+package com.example.moviecatalogue.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,14 +11,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.moviecatalogue.view.DetailTvShowActivity;
+import com.example.moviecatalogue.R;
+import com.example.moviecatalogue.model.TvShow;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.moviecatalogue.base.networks.ApiUrl.BASE_URL;
+import static com.example.moviecatalogue.base.networks.ApiUrl.PATH_TV;
+import static com.example.moviecatalogue.base.networks.ApiUrl.POSTER_PATH;
 
 public class ListViewTvAdapter extends RecyclerView.Adapter<ListViewTvAdapter.ViewHolder> {
 
     private Context context;
-    private ArrayList<TvShow> tvShowArrayList;
+    private List<TvShow> tvShowArrayList;
 
-    public void setTvShowArrayList (ArrayList<TvShow> tvShowArrayList) {
+    public List<TvShow> getTvShowArrayList() {
+        return tvShowArrayList;
+    }
+
+    public void setTvShowArrayList (List<TvShow> tvShowArrayList) {
         this.tvShowArrayList = tvShowArrayList;
         notifyDataSetChanged();
 
@@ -39,9 +53,9 @@ public class ListViewTvAdapter extends RecyclerView.Adapter<ListViewTvAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.txtjudul.setText(tvShowArrayList.get(position).getJudul());
-        holder.txtDescription.setText(tvShowArrayList.get(position).getDeskripsi());
-        holder.imgPhoto.setImageResource(tvShowArrayList.get(position).getPhoto());
+        holder.txtjudul.setText(tvShowArrayList.get(position).getOriginal_name());
+        holder.txtDescription.setText(tvShowArrayList.get(position).getOverview());
+        Picasso.get().load(POSTER_PATH+tvShowArrayList.get(position).getPoster_path()).into(holder.imgPhoto);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
