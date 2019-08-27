@@ -5,33 +5,15 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TvShow implements Parcelable {
-
-    @SerializedName("id")
+public class FavoriteTv implements Parcelable {
     private int id;
-
-    @SerializedName("original_name")
     private String original_name;
-
-    @SerializedName("vote_count")
     private String vote_count;
-
-    @SerializedName("overview")
     private String overview;
-
-    @SerializedName("poster_path")
     private String poster_path;
-
-    @SerializedName("first_air_date")
     private String first_air_date;
-
-    @SerializedName("backdrop_path")
     private String backdrop_path;
-
-    @SerializedName("vote_average")
     private double voteAverage;
-
-    @SerializedName("popularity")
     private double popularity;
 
     public int getId() {
@@ -106,8 +88,7 @@ public class TvShow implements Parcelable {
         this.popularity = popularity;
     }
 
-    protected TvShow(Parcel in) {
-        id = in.readInt();
+    protected FavoriteTv(Parcel in) {
         original_name = in.readString();
         vote_count = in.readString();
         overview = in.readString();
@@ -120,7 +101,6 @@ public class TvShow implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
         dest.writeString(original_name);
         dest.writeString(vote_count);
         dest.writeString(overview);
@@ -136,15 +116,15 @@ public class TvShow implements Parcelable {
         return 0;
     }
 
-    public static final Creator<TvShow> CREATOR = new Creator<TvShow>() {
+    public static final Creator<FavoriteTv> CREATOR = new Creator<FavoriteTv>() {
         @Override
-        public TvShow createFromParcel(Parcel in) {
-            return new TvShow(in);
+        public FavoriteTv createFromParcel(Parcel in) {
+            return new FavoriteTv(in);
         }
 
         @Override
-        public TvShow[] newArray(int size) {
-            return new TvShow[size];
+        public FavoriteTv[] newArray(int size) {
+            return new FavoriteTv[size];
         }
     };
 }
