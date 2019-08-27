@@ -26,11 +26,9 @@ import static com.example.moviecatalogue.base.networks.ApiUrl.POSTER_PATH;
 public class ListViewTvAdapter extends RecyclerView.Adapter<ListViewTvAdapter.ViewHolder> {
 
     private Context context;
-    private List<TvShow> tvShowArrayList;
+    private List<TvShow> tvShowArrayList = new ArrayList<>();
 
-    public List<TvShow> getTvShowArrayList() {
-        return tvShowArrayList;
-    }
+
 
     public void setTvShowArrayList (List<TvShow> tvShowArrayList) {
         this.tvShowArrayList = tvShowArrayList;
@@ -38,6 +36,9 @@ public class ListViewTvAdapter extends RecyclerView.Adapter<ListViewTvAdapter.Vi
 
     }
 
+    public List<TvShow> getTvShowArrayList() {
+        return tvShowArrayList;
+    }
 
     public ListViewTvAdapter(Context context) {
         this.context = context;

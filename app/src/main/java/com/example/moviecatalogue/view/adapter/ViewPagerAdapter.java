@@ -13,9 +13,8 @@ import com.example.moviecatalogue.view.TvshowFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
-    public ViewPagerAdapter(Context context, FragmentManager fm) {
+    public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
-        mContext = context;
     }
 
     @Override

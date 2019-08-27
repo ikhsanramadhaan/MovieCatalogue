@@ -15,6 +15,7 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.base.api.ApiInterface;
@@ -23,7 +24,9 @@ import com.example.moviecatalogue.model.Film;
 import com.example.moviecatalogue.model.MovieResult;
 import com.example.moviecatalogue.view.adapter.ListViewMovieAdapter;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,11 +42,11 @@ import static com.example.moviecatalogue.base.networks.ApiUrl.LANGUAGE_ENGLISH;
 public class MovieFragment extends Fragment {
 
 
-    private ArrayList<Film> filmArrayList = new ArrayList<>();
+    private List<Film> filmArrayList = new ArrayList<>();
     private ProgressDialog dialog;
     private RecyclerView listView;
     private ListViewMovieAdapter adapter;
-    final public static String KEY_MOVIE = "key_movie";
+
 
     public MovieFragment() {
         // Required empty public constructor
@@ -55,47 +58,64 @@ public class MovieFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view =inflater.inflate(R.layout.fragment_movie, container, false);
+        return inflater.inflate(R.layout.fragment_movie, container, false);
+    }
 
-
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         listView = view.findViewById(R.id.lv_movie);
-        adapter = new ListViewMovieAdapter(getContext());
         dialog = new ProgressDialog(getContext());
         dialog.setMessage(getString(R.string.message));
+        adapter = new ListViewMovieAdapter(getContext());
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
         listView.setHasFixedSize(true);
-        listView.setAdapter(adapter);
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        listView.addItemDecoration(itemDecoration);
-
-        dialog.show();
-        response();
 
         if (savedInstanceState != null){
-            filmArrayList = savedInstanceState.getParcelableArrayList(KEY_MOVIE);
+            ArrayList<Film> films;
+            films = savedInstanceState.getParcelableArrayList("movie");
+            adapter.setFilmArrayList(films);
+            listView.setAdapter(adapter);
+        }else {
+            response();
         }
 
 
-        return view;
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelableArrayList(KEY_MOVIE, new ArrayList<>(adapter.getFilmArrayList()));
+        outState.putParcelableArrayList("movie", new ArrayList<>(adapter.getFilmArrayList()));
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null){
+            ArrayList<Film> films;
+            films = savedInstanceState.getParcelableArrayList("movie");
+            adapter.setFilmArrayList(films);
+            listView.setAdapter(adapter);
+        }
     }
 
     public void response(){
         ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         Call<MovieResult> call = apiInterface.getMovie(API_KEY);
+        dialog.show();
         call.enqueue(new Callback<MovieResult>() {
             @Override
             public void onResponse(Call<MovieResult> call, Response<MovieResult> response) {
                 if (response.isSuccessful()){
+                    filmArrayList = response.body().getResultsMovie();
                     dialog.dismiss();
-                    adapter.setFilmArrayList(response.body().getResultsMovie());
+                    adapter.setFilmArrayList(filmArrayList);
+                    listView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }else {
                     dialog.dismiss();
+                    Toast.makeText(getContext(), "data not found", Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.example.moviecatalogue.model.TvShow;
 import com.example.moviecatalogue.view.adapter.ListViewTvAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,8 +45,7 @@ public class TvshowFragment extends Fragment  {
     private ProgressDialog progressDialog;
 
     private RecyclerView listView;
-    private ArrayList<TvShow> tvShowArrayList = new ArrayList<>() ;
-    final public static String KEY_TV = "key_tv";
+    private List<TvShow> tvShowArrayList = new ArrayList<>() ;
 
     public TvshowFragment() {
         // Required empty public constructor
@@ -56,8 +57,15 @@ public class TvshowFragment extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view =  inflater.inflate(R.layout.fragment_tvshow, container, false);
 
+
+
+        return inflater.inflate(R.layout.fragment_tvshow, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         adapter = new ListViewTvAdapter(getContext());
         listView = view.findViewById(R.id.lv_tvshow);
 
@@ -68,21 +76,38 @@ public class TvshowFragment extends Fragment  {
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
         listView.setAdapter(adapter);
 
-        adapter = new ListViewTvAdapter(getContext());
-        adapter.setTvShowArrayList(tvShowArrayList);
-        listView.setHasFixedSize(true);
-        listView.setLayoutManager(new LinearLayoutManager(getContext()));
-        listView.setAdapter(adapter);
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        listView.addItemDecoration(itemDecoration);
-        response();
-        if (savedInstanceState!=null) {
-            tvShowArrayList = savedInstanceState.getParcelableArrayList(KEY_TV);
-            adapter.setTvShowArrayList(tvShowArrayList);
+        if (savedInstanceState != null){
+            ArrayList<TvShow> tvShows;
+            tvShows = savedInstanceState.getParcelableArrayList("tv");
+            adapter.setTvShowArrayList(tvShows);
             listView.setAdapter(adapter);
+        }else {
+            response();
         }
 
-        return view;
+
+
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelableArrayList("tv", new ArrayList<>(adapter.getTvShowArrayList()));
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState == null) {
+            response();
+        }else {
+            ArrayList<TvShow> tvShows;
+            tvShows = savedInstanceState.getParcelableArrayList("tv");
+            adapter.setTvShowArrayList(tvShows);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     public void response(){
@@ -92,9 +117,13 @@ public class TvshowFragment extends Fragment  {
         tvResultCall.enqueue(new Callback<TvResult>() {
             @Override
             public void onResponse(Call<TvResult> call, Response<TvResult> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
+                    tvShowArrayList = response.body().getGetTvShow();
                     progressDialog.dismiss();
-                    adapter.setTvShowArrayList(response.body().getGetTvShow());
+                    adapter.setTvShowArrayList(tvShowArrayList);
+                    listView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
                 }else {
                     progressDialog.dismiss();
                 }
@@ -103,16 +132,12 @@ public class TvshowFragment extends Fragment  {
             @Override
             public void onFailure(Call<TvResult> call, Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(getContext(), t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "data not found", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(KEY_TV, new ArrayList<>(adapter.getTvShowArrayList()));
-    }
+
 
 
 }

@@ -17,6 +17,7 @@ import com.example.moviecatalogue.view.DetailMovieActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.example.moviecatalogue.base.networks.ApiUrl.BASE_URL;
@@ -26,17 +27,16 @@ import static com.example.moviecatalogue.base.networks.ApiUrl.POSTER_PATH;
 public class ListViewMovieAdapter extends RecyclerView.Adapter<ListViewMovieAdapter.ViewHolder> {
 
     private Context context;
-    private List<Film> filmArrayList;
+    private List<Film> filmArrayList = new ArrayList<>();
+
+
+    public void setFilmArrayList(List<Film> filmArrayList) {
+        this.filmArrayList = filmArrayList;
+    }
 
     public List<Film> getFilmArrayList() {
         return filmArrayList;
     }
-
-    public void setFilmArrayList(List<Film> filmArrayList) {
-        this.filmArrayList = filmArrayList;
-        notifyDataSetChanged();
-    }
-
 
     public ListViewMovieAdapter(Context context) {
         this.context = context;
