@@ -8,22 +8,25 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.moviecatalogue.R;
-import com.example.moviecatalogue.view.MovieFragment;
-import com.example.moviecatalogue.view.TvshowFragment;
+import com.example.moviecatalogue.view.fragment.FavoriteMovieFragment;
+import com.example.moviecatalogue.view.fragment.FavoriteTvShowFragment;
+import com.example.moviecatalogue.view.fragment.MovieFragment;
+import com.example.moviecatalogue.view.fragment.TvshowFragment;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
-    public ViewPagerAdapter(FragmentManager fm) {
+    public ViewPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        this.mContext = context;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new MovieFragment();
+                return new FavoriteMovieFragment();
             case 1:
-                return new TvshowFragment();
+                return new FavoriteTvShowFragment();
                 default:
                     throw new IllegalArgumentException();
         }
@@ -39,9 +42,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position){
             case 0:
-                return mContext.getString(R.string.title_movies);
+                return mContext.getString(R.string.title_fav_movies);
             case 1:
-                return mContext.getString(R.string.title_tvshows);
+                return mContext.getString(R.string.title_fav_tvshows);
                 default:
                     return null;
         }

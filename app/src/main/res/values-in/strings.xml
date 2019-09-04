@@ -10,159 +10,16 @@
     <string name="popularity">Popularitas Film</string>
     <string name="description">Deskripsi Film</string>
     <string name="release">Tahun Rilis Film</string>
-    <string name="message">Please Wait...</string>
+    <string name="message">Tunggu Sebentar...</string>
+    <string name="title_fav">Favorite</string>
+    <string name="remove">Hapus</string>
+    <string name="remove_confirm">Apakah Anda Yakin?</string>
 
-
-    <string-array name="data_name_movie">
-        <item>Avengers : Infinity War</item>
-        <item>Spider-Man: Into the Spider-Verse</item>
-        <item>A Star Is Born </item>
-        <item>Aquaman </item>
-        <item>Bird Box </item>
-        <item>Bohemian Rhapsody </item>
-        <item>Bumblebee </item>
-        <item>Once Upon a Deadpool</item>
-        <item>Venom </item>
-        <item>Creed II  </item>
-    </string-array>
-
-    <string-array name="data_director_movie">
-        <item>Joe Russo</item>
-        <item>Rodney Rothman</item>
-        <item>Bradley Cooper</item>
-        <item>James Wan</item>
-        <item>Susanne Bierc</item>
-        <item>Bryan Singer</item>
-        <item>Travis Knight</item>
-        <item>David Leitch</item>
-        <item>Ruben Fleischer</item>
-        <item>Steven Caple Jr.</item>
-    </string-array>
-
-    <string-array name="data_genre_movie">
-        <item>Aksi</item>
-        <item>Animasi</item>
-        <item>Romantik</item>
-        <item>Aksi</item>
-        <item>Kriminal</item>
-        <item>Drama</item>
-        <item>Aksi</item>
-        <item>Komedi</item>
-        <item>Aksi</item>
-        <item>Drama</item>
-    </string-array>
-
-    <string-array name="data_year_movie">
-        <item>2018</item>
-        <item>2018</item>
-        <item>2018</item>
-        <item>2018</item>
-        <item>2018</item>
-        <item>2018</item>
-        <item>2018</item>
-        <item>2018</item>
-        <item>2018</item>
-        <item>2018</item>
-    </string-array>
-    <string-array name="data_description_movie">
-        <item>Ketika Avengers dan sekutu mereka terus melindungi dunia dari ancaman yang terlalu besar untuk ditangani oleh satu pahlawan, bahaya baru telah muncul dari bayangan kosmik Thanos. Seorang lalim penghinaan intergalaksi, tujuannya adalah untuk mengumpulkan semua enam Batu Infinity, artefak kekuatan tak terbayangkan, dan menggunakannya untuk menimbulkan keinginannya yang terpelintir pada semua kenyataan. Segala yang Avengers telah perjuangkan telah menyebabkan hingga saat ini nasib Bumi dan keberadaannya tidak pernah lebih pasti</item>
-        <item>Miles Morales menyulap hidupnya antara menjadi siswa sekolah menengah dan menjadi manusia laba-laba. Ketika Wilson Kingpin Fisk menggunakan collider super, yang lain dari seberang Spider-Verse diangkut ke dimensi ini.</item>
-        <item>Musisi kawakan, Jackson Maine, menemukan dan jatuh cinta pada artis yang sedang berjuang, Ally. Dia baru saja menyerah pada mimpinya untuk menjadi besar sebagai penyanyi sampai Jack membujuknya menjadi sorotan. Tetapi bahkan ketika karier Ally lepas landas, sisi pribadi dari hubungan mereka hancur, ketika Jack berjuang terus-menerus dengan setan-setan internalnya sendiri.</item>
-        <item>Setelah menjadi rumah bagi peradaban paling maju di Bumi, Atlantis sekarang merupakan kerajaan bawah laut yang diperintah oleh Raja Orm yang haus kekuasaan. Dengan pasukan yang sangat besar yang dapat digunakannya, Orm berencana untuk menaklukkan orang-orang samudera yang tersisa dan kemudian dunia permukaan yang berdiri di jalannya adalah Arthur Curry, setengah manusia setengah badan, setengah saudara lelaki Atlantis dan pewaris sejati takhta</item>
-        <item>Lima tahun setelah kehadiran tak terlihat yang tak menyenangkan membuat sebagian besar masyarakat bunuh diri, seorang yang selamat dan dua anaknya melakukan upaya putus asa untuk mencapai keselamatan.</item>
-        <item>Penyanyi Freddie Mercury, gitaris Brian May, drummer Roger Taylor dan gitaris John Deacon mengambil dunia musik dengan badai ketika mereka membentuk band rock n roll Queen pada tahun 1970. Lagu-lagu hit menjadi klasik instan. Ketika gaya hidup Mercurys yang semakin liar mulai lepas kendali, Queen segera menghadapi tantangan terbesarnya namun menemukan cara untuk menjaga band tetap bersama di tengah kesuksesan dan kelebihan</item>
-        <item>Dalam pelarian pada tahun 1987, Bumblebee menemukan tempat perlindungan di tempat barang rongsokan di kota pantai kecil California. Charlie, di puncak usia 18 dan berusaha menemukan tempatnya di dunia, menemukan Bumblebee, bekas luka pertempuran dan patah. Ketika Charlie menghidupkannya, dia dengan cepat mengetahui bahwa ini bukan bug VW kuning biasa</item>
-        <item>Fred Savage yang diculik dipaksa untuk menahan Deadpools PG-13 membawakan Deadpool 2 sebagai kisah Putri Bride yang penuh dengan keajaiban, keajaiban, dan nol Fs.</item>
-        <item>Jurnalis investigasi Eddie Brock berusaha untuk kembali setelah skandal, tetapi secara tidak sengaja menjadi tuan rumah Venom, seorang simbiot alien yang sangat kuat, Segera, ia harus bergantung pada kekuatan yang baru ditemukannya untuk melindungi dunia dari sebuah organisasi bayangan yang mencari symbiote mereka sendiri.</item>
-        <item>Antara kewajiban pribadi dan pelatihan untuk pertarungan besar berikutnya melawan lawan yang memiliki ikatan dengan masa lalu keluarganya, Adonis Creed menghadapi tantangan hidupnya.</item>
-    </string-array>
-    <array name="data_photo_movie">
-        <item>@drawable/poster_avengerinfinity</item>
-        <item>@drawable/poster_spiderman</item>
-        <item>@drawable/poster_a_star</item>
-        <item>@drawable/poster_aquaman</item>
-        <item>@drawable/poster_birdbox</item>
-        <item>@drawable/poster_bohemian</item>
-        <item>@drawable/poster_bumblebee</item>
-        <item>@drawable/poster_deadpool</item>
-        <item>@drawable/poster_venom</item>
-        <item>@drawable/poster_creed</item>
-    </array>
-
-    <string-array name="data_name_tvshow">
-        <item>Arrow </item>
-        <item>Doom Patrol </item>
-        <item>Dragon Ball </item>
-        <item>Fairy Tail </item>
-        <item>Family Guy </item>
-        <item>The Flash </item>
-        <item>Game of Thrones </item>
-        <item>Gotham</item>
-        <item>Grey Anatomy</item>
-        <item>Hanna</item>
-    </string-array>
-    <string-array name="data_genre_tvshow">
-        <item>Kriminal</item>
-        <item>Fantasi</item>
-        <item>Animasi</item>
-        <item>Animasi</item>
-        <item>Komedi</item>
-        <item>Fantasi</item>
-        <item>Fantasi</item>
-        <item>Kriminal</item>
-        <item>Drama</item>
-        <item>Aksi</item>
-    </string-array>
-
-    <string-array name="data_director_tvshow">
-        <item>Greg Berlanti</item>
-        <item>Jeremy Carver</item>
-        <item>Akira Toriyama</item>
-        <item>Shinji Ishihira</item>
-        <item>Seth MacFarlane</item>
-        <item>Geoff Johns</item>
-        <item>David Benioff</item>
-        <item>Bruno Heller</item>
-        <item>Shonda Rhimes</item>
-        <item>David Farr</item>
-    </string-array>
-
-    <string-array name="data_year_tvshow">
-        <item>2012</item>
-        <item>2019</item>
-        <item>1986</item>
-        <item>2009</item>
-        <item>1999</item>
-        <item>2014</item>
-        <item>2011</item>
-        <item>2014</item>
-        <item>2005</item>
-        <item>2019</item>
-    </string-array>
-    <string-array name="data_description_tvshow">
-        <item>Playboy miliarder manja, Oliver Queen, hilang dan diduga tewas ketika kapal pesiarnya hilang di laut. Dia kembali lima tahun kemudian seorang pria yang berubah, bertekad untuk membersihkan kota sebagai main hakim sendiri bersenjatakan busur.</item>
-        <item>Anggota Patroli Doom masing-masing mengalami kecelakaan mengerikan yang memberi mereka kemampuan manusia super tetapi juga membuat mereka terluka dan cacat. Trauma dan tertindas, tim menemukan tujuan melalui Ketua, yang menyatukan mereka untuk menyelidiki fenomena paling aneh yang ada dan untuk melindungi Bumi dari apa yang mereka temukan.</item>
-        <item>Dahulu kala di pegunungan, seorang master pertempuran yang dikenal sebagai Gohan menemukan seorang bocah aneh yang ia beri nama Goku. Gohan membesarkannya dan melatih Goku dalam seni martia sampai dia mati. Bocah muda dan sangat kuat itu sendirian, tetapi mudah dikelola. Kemudian suatu hari, Goku bertemu dengan seorang gadis remaja bernama Bulma, yang pencariannya untuk bola naga membawanya ke rumah Gokus. Bersama-sama, mereka berangkat untuk menemukan ketujuh bola naga dalam sebuah petualangan.</item>
-        <item>Lucy adalah seorang gadis berusia 17 tahun, yang ingin menjadi penyihir penuh. Suatu hari ketika mengunjungi Kota Harujion, dia bertemu Natsu, seorang pemuda yang mudah sakit karena segala jenis transportasi. Tapi Natsu bukan sembarang anak biasa, ia adalah anggota dari salah satu dunia yang paling terkenal sebagai guild mage: Fairy Tail.</item>
-        <item>Seri animasi animasi Freakin Sweet yang sakit, terpelintir, tidak benar, menampilkan petualangan keluarga Griffin yang disfungsional. Peter yang kikuk dan Lois yang sudah lama menderita memiliki tiga anak. Stewie (bayi yang cerdas tetapi sadis yang bertekad membunuh ibunya dan mengambil alih dunia), Meg (yang tertua, dan merupakan gadis yang paling tidak populer di kota) dan Chris (anak tengah, dia tidak terlalu cerdas tetapi memiliki hasrat untuk film). Anggota terakhir keluarga itu adalah Brian - anjing yang bisa bicara dan lebih dari sekadar hewan peliharaan, ia menjaga Stewie, sementara menghirup Martinis dan memilah-milah masalah hidupnya sendiri.</item>
-        <item>Setelah akselerator partikel menyebabkan badai aneh, Penyelidik CSI Barry Allen disambar petir dan jatuh koma. Beberapa bulan kemudian dia terbangun dengan kekuatan kecepatan super, memberinya kemampuan untuk bergerak melalui Central City seperti malaikat penjaga yang tak terlihat. Meskipun awalnya bersemangat dengan kekuatan barunya, Barry terkejut menemukan bahwa dia bukan satu-satunya manusia meta yang diciptakan setelah ledakan akselerator dan tidak semua orang menggunakan kekuatan baru mereka untuk kebaikan. Barry bermitra dengan S.T.A.R. Lab dan mendedikasikan hidupnya untuk melindungi yang tidak bersalah. Untuk saat ini, hanya beberapa teman dekat dan rekan yang tahu bahwa Barry secara harfiah adalah manusia tercepat yang hidup, tetapi tidak akan lama sebelum dunia mengetahui apa yang telah menjadi Barry Allen.</item>
-        <item>Tujuh keluarga bangsawan berjuang untuk menguasai tanah mitos Westeros. Gesekan antara rumah-rumah mengarah ke perang skala penuh. Semua sementara kejahatan yang sangat kuno terbangun di utara terjauh. Di tengah-tengah perang, perintah militer yang diabaikan, Night Watch, adalah yang berdiri di antara alam manusia dan kengerian es di luarnya.</item>
-        <item>Sebelum ada Batman, ada GOTHAM. Semua orang tahu nama Komisaris Gordon. Dia adalah salah satu musuh terbesar di dunia kejahatan, seorang pria yang reputasinya identik dengan hukum dan ketertiban. Tapi apa yang diketahui tentang kisah Gordon dan kenaikannya dari detektif pemula ke Komisaris Polisi? Apa yang diperlukan untuk menavigasi berbagai lapisan korupsi yang diam-diam memerintah Kota Gotham, tempat bertelurnya penjahat paling ikonik di dunia? Dan keadaan apa yang menciptakan mereka - kepribadian yang lebih besar dari kehidupan siapa yang akan menjadi Catwoman, The Penguin, The Riddler, Two-Face dan The Joker?</item>
-        <item>Mengikuti kehidupan pribadi dan profesional sekelompok dokter di Seattle Gray Sloan Memorial Hospital.</item>
-        <item>Drama thriller dan kedatangan zaman ini mengikuti perjalanan seorang gadis muda yang luar biasa ketika ia menghindari pengejaran tanpa henti dari agen CIA yang tidak dikenal dan mencoba untuk menggali kebenaran di balik siapa dirinya. Berdasarkan film Joe Wright 2011.</item>
-    </string-array>
-    <array name="data_photo_tvshow">
-        <item>@drawable/poster_arrow</item>
-        <item>@drawable/poster_doom_patrol</item>
-        <item>@drawable/poster_dragon_ball</item>
-        <item>@drawable/poster_fairytail</item>
-        <item>@drawable/poster_family_guy</item>
-        <item>@drawable/poster_flash</item>
-        <item>@drawable/poster_god</item>
-        <item>@drawable/poster_gotham</item>
-        <item>@drawable/poster_grey_anatomy</item>
-        <item>@drawable/poster_hanna</item>
-    </array>
+    <string name="title_fav_movies">Film Favorite</string>
+    <string name="title_fav_tvshows">Acara Tv Favorite</string>
+    <string name="view_empty_data">Data Kosong</string>
+    <string name="detail_fav_movie">Detail Favorite Movie</string>
+    <string name="title_delete">Hapus</string>
 
     <string name="change_language_settings">Ubah Pengaturan Bahasa</string>
     <string name="detail_movie">Detail Film</string>

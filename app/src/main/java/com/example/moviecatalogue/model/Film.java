@@ -164,7 +164,8 @@ public class Film implements Parcelable {
         this.voteCount = voteCount;
     }
 
-
+    public Film() {
+    }
 
     protected Film(Parcel in) {
         overview = in.readString();

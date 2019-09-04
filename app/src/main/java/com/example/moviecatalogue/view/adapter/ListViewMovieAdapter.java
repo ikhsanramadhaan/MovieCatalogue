@@ -13,15 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.model.Film;
-import com.example.moviecatalogue.view.DetailMovieActivity;
+import com.example.moviecatalogue.view.activity.DetailMovieActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static com.example.moviecatalogue.base.networks.ApiUrl.BASE_URL;
-import static com.example.moviecatalogue.base.networks.ApiUrl.PATH_MOVIE;
 import static com.example.moviecatalogue.base.networks.ApiUrl.POSTER_PATH;
 
 public class ListViewMovieAdapter extends RecyclerView.Adapter<ListViewMovieAdapter.ViewHolder> {
@@ -30,8 +27,11 @@ public class ListViewMovieAdapter extends RecyclerView.Adapter<ListViewMovieAdap
     private List<Film> filmArrayList = new ArrayList<>();
 
 
-    public void setFilmArrayList(List<Film> filmArrayList) {
+    public void setFilmArrayList(List<Film> films) {
         this.filmArrayList = filmArrayList;
+        filmArrayList.clear();
+        filmArrayList.addAll(films);
+        notifyDataSetChanged();
     }
 
     public List<Film> getFilmArrayList() {

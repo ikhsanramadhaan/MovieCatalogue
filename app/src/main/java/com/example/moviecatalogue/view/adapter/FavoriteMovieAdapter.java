@@ -12,55 +12,54 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviecatalogue.R;
-import com.example.moviecatalogue.model.TvShow;
+import com.example.moviecatalogue.model.Film;
 import com.example.moviecatalogue.view.activity.DetailMovieActivity;
-import com.example.moviecatalogue.view.activity.DetailTvActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.moviecatalogue.base.networks.ApiUrl.POSTER_PATH;
 
-public class ListViewTvAdapter extends RecyclerView.Adapter<ListViewTvAdapter.ViewHolder> {
-
+public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdapter.ViewHolder> {
     private Context context;
-    private List<TvShow> tvShowArrayList = new ArrayList<>();
+    private ArrayList<Film> tvShows = new ArrayList<>();
 
-    public void setTvShowArrayList (List<TvShow> tvShows) {
-        this.tvShowArrayList = tvShowArrayList;
-        notifyDataSetChanged();
-        tvShowArrayList.clear();
-        tvShowArrayList.addAll(tvShows);
 
-    }
-
-    public List<TvShow> getTvShowArrayList() {
-        return tvShowArrayList;
-    }
-
-    public ListViewTvAdapter(Context context) {
+    public FavoriteMovieAdapter(Context context) {
         this.context = context;
-        tvShowArrayList = new ArrayList<>();
+    }
+
+    public ArrayList<Film> getTvShows() {
+
+        return tvShows;
+    }
+
+    public void setTvShows(ArrayList<Film> tvShowArrayList) {
+        if (tvShows.size() > 0){
+            tvShows.clear();
+        }
+
+        this.tvShows.addAll(tvShowArrayList);
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view =LayoutInflater.from(parent.getContext()).inflate(R.layout.content_item_tvshow, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_item_movie, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.txtjudul.setText(tvShowArrayList.get(position).getOriginal_name());
-        holder.txtDescription.setText(tvShowArrayList.get(position).getOverview());
-        Picasso.get().load(POSTER_PATH+tvShowArrayList.get(position).getPoster_path()).into(holder.imgPhoto);
+        holder.txtjudul.setText(tvShows.get(position).getTitle());
+        holder.txtDescription.setText(tvShows.get(position).getOverview());
+        Picasso.get().load(POSTER_PATH+tvShows.get(position).getPosterPath()).into(holder.imgPhoto);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailTvActivity.class);
-                intent.putExtra(DetailTvActivity.EXTRA_TV, tvShowArrayList.get(position));
+                Intent intent = new Intent(context, DetailMovieActivity.class);
+                intent.putExtra(DetailMovieActivity.EXTRA_FILM, tvShows.get(position));
                 context.startActivity(intent);
             }
         });
@@ -68,22 +67,18 @@ public class ListViewTvAdapter extends RecyclerView.Adapter<ListViewTvAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return tvShowArrayList.size();
+        return tvShows.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView txtjudul;
         private TextView txtDescription;
         private ImageView imgPhoto;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtjudul = itemView.findViewById(R.id.judul);
             txtDescription = itemView.findViewById(R.id.description);
             imgPhoto = itemView.findViewById(R.id.photo);
         }
-
-//
     }
 }

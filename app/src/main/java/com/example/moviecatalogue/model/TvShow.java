@@ -14,7 +14,7 @@ public class TvShow implements Parcelable {
     private String original_name;
 
     @SerializedName("vote_count")
-    private String vote_count;
+    private int vote_count;
 
     @SerializedName("overview")
     private String overview;
@@ -50,11 +50,11 @@ public class TvShow implements Parcelable {
         this.original_name = original_name;
     }
 
-    public String getVote_count() {
+    public int getVote_count() {
         return vote_count;
     }
 
-    public void setVote_count(String vote_count) {
+    public void setVote_count(int vote_count) {
         this.vote_count = vote_count;
     }
 
@@ -106,10 +106,13 @@ public class TvShow implements Parcelable {
         this.popularity = popularity;
     }
 
+    public TvShow() {
+    }
+
     protected TvShow(Parcel in) {
         id = in.readInt();
         original_name = in.readString();
-        vote_count = in.readString();
+        vote_count = in.readInt();
         overview = in.readString();
         poster_path = in.readString();
         first_air_date = in.readString();
@@ -122,7 +125,7 @@ public class TvShow implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(original_name);
-        dest.writeString(vote_count);
+        dest.writeInt(vote_count);
         dest.writeString(overview);
         dest.writeString(poster_path);
         dest.writeString(first_air_date);
