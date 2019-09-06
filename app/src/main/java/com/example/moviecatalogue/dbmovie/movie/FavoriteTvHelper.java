@@ -13,23 +13,22 @@ import com.example.moviecatalogue.model.TvShow;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
-import static android.provider.BaseColumns._ID;
-import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_TV_ID;
 import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_ORIGINAL_NAME_TV;
 import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_OVERVIEW_TV;
 import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_POPULARITY_TV;
 import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_POSTER_PATH_TV;
 import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_RELEASE_DATE_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_TV_ID;
 import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_VOTE_AVERAGE_TV;
 import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.TABLE_TV;
 
 public class FavoriteTvHelper {
-    private DatabaseHelper helper;
+    private static DatabaseHelper databaseHelper;
     private static FavoriteTvHelper INSTANCE;
-    private static SQLiteDatabase database;
+    private SQLiteDatabase database;
 
     public FavoriteTvHelper(Context context) {
-        helper = new DatabaseHelper(context);
+        databaseHelper = new DatabaseHelper(context);
     }
 
     public static FavoriteTvHelper getInstance(Context context) {
@@ -43,12 +42,12 @@ public class FavoriteTvHelper {
         return INSTANCE;
     }
 
-    public void open() throws SQLException {
-        database = helper.getWritableDatabase();
+    public void Open() throws SQLException {
+        database = databaseHelper.getWritableDatabase();
     }
 
     public void close() {
-        helper.close();
+        databaseHelper.close();
         if (database.isOpen())
             database.close();
     }
@@ -60,22 +59,22 @@ public class FavoriteTvHelper {
                 null,
                 null,
                 null,
-                _ID + " ASC",
+                COLUMN_TV_ID + " ASC",
                 null);
         cursor.moveToFirst();
-        TvShow tv;
+        TvShow tvShow;
         if (cursor.getCount() > 0) {
             do {
-                tv = new TvShow();
-                tv.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_TV_ID))));
-                tv.setOriginal_name(cursor.getString(cursor.getColumnIndex(COLUMN_ORIGINAL_NAME_TV)));
-                tv.setVoteAverage(Double.parseDouble(cursor.getString(cursor.getColumnIndex(COLUMN_VOTE_AVERAGE_TV))));
-                tv.setPoster_path(cursor.getString(cursor.getColumnIndex(COLUMN_POSTER_PATH_TV)));
-                tv.setOverview(cursor.getString(cursor.getColumnIndex(COLUMN_OVERVIEW_TV)));
-                tv.setPopularity(Double.parseDouble(cursor.getString(cursor.getColumnIndex(COLUMN_POPULARITY_TV))));
-                tv.setFirst_air_date(cursor.getString(cursor.getColumnIndex(COLUMN_RELEASE_DATE_TV)));
+                tvShow = new TvShow();
+                tvShow.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_TV_ID))));
+                tvShow.setOriginal_name(cursor.getString(cursor.getColumnIndex(COLUMN_ORIGINAL_NAME_TV)));
+                tvShow.setVoteAverage(Double.parseDouble(cursor.getString(cursor.getColumnIndex(COLUMN_VOTE_AVERAGE_TV))));
+                tvShow.setPoster_path(cursor.getString(cursor.getColumnIndex(COLUMN_POSTER_PATH_TV)));
+                tvShow.setOverview(cursor.getString(cursor.getColumnIndex(COLUMN_OVERVIEW_TV)));
+                tvShow.setPopularity(Double.parseDouble(cursor.getString(cursor.getColumnIndex(COLUMN_POPULARITY_TV))));
+                tvShow.setFirst_air_date(cursor.getString(cursor.getColumnIndex(COLUMN_RELEASE_DATE_TV)));
 
-                arrayList.add(tv);
+                arrayList.add(tvShow);
 
                 cursor.moveToNext();
 
@@ -85,30 +84,30 @@ public class FavoriteTvHelper {
         return arrayList;
     }
 
-    public long insertTv(TvShow tv) {
-        ContentValues args = new ContentValues();
-        args.put(COLUMN_TV_ID, tv.getId());
-        args.put(COLUMN_ORIGINAL_NAME_TV, tv.getOriginal_name());
-        args.put(COLUMN_OVERVIEW_TV, tv.getOverview());
-        args.put(COLUMN_POSTER_PATH_TV, tv.getPoster_path());
-        args.put(COLUMN_VOTE_AVERAGE_TV, tv.getVoteAverage());
-        args.put(COLUMN_POPULARITY_TV, tv.getPopularity());
-        args.put(COLUMN_RELEASE_DATE_TV, tv.getFirst_air_date());
-        return database.insert(TABLE_TV, null, args);
+    public void insertTv(TvShow tvShow) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_TV_ID,tvShow.getId());
+        contentValues.put(COLUMN_VOTE_AVERAGE_TV, tvShow.getVoteAverage());
+        contentValues.put(COLUMN_ORIGINAL_NAME_TV, tvShow.getOriginal_name());
+        contentValues.put(COLUMN_OVERVIEW_TV, tvShow.getOverview());
+        contentValues.put(COLUMN_POPULARITY_TV, tvShow.getPopularity());
+        contentValues.put(COLUMN_POSTER_PATH_TV, tvShow.getPoster_path());
+        contentValues.put(COLUMN_RELEASE_DATE_TV, tvShow.getFirst_air_date());
+        database.insert(TABLE_TV, null, contentValues);
     }
 
     public void deleteTv(int id) {
-        database = helper.getWritableDatabase();
-        database.delete(TABLE_TV, _ID + "=" + id, null);
+        database = databaseHelper.getWritableDatabase();
+        database.delete(TABLE_TV, COLUMN_TV_ID + "=" + id, null);
     }
 
     public boolean checkTv(String id) {
-        database = helper.getWritableDatabase();
-        String selectString = "SELECT * FROM " + TABLE_TV + " WHERE " + _ID + " =?";
+        database = databaseHelper.getWritableDatabase();
+        String selectString = "SELECT * FROM " + TABLE_TV + " WHERE " + COLUMN_TV_ID + " =?";
         Cursor cursor = database.rawQuery(selectString, new String[]{id});
-        boolean checkTv = false;
+        boolean checkMovie = false;
         if (cursor.moveToFirst()) {
-            checkTv = true;
+            checkMovie = true;
             int count = 0;
             while (cursor.moveToNext()) {
                 count++;
@@ -116,6 +115,6 @@ public class FavoriteTvHelper {
             Log.d(TAG, String.format("%d records found", count));
         }
         cursor.close();
-        return checkTv;
+        return checkMovie;
     }
 }

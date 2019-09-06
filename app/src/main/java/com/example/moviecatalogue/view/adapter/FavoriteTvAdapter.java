@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.model.TvShow;
-import com.example.moviecatalogue.view.activity.DetailMovieActivity;
 import com.example.moviecatalogue.view.activity.DetailTvActivity;
 import com.squareup.picasso.Picasso;
 
@@ -23,24 +22,23 @@ import static com.example.moviecatalogue.base.networks.ApiUrl.POSTER_PATH;
 
 public class FavoriteTvAdapter extends RecyclerView.Adapter<FavoriteTvAdapter.ViewHolder> {
 
-    public ArrayList<TvShow> getMovieList() {
-        return movieList;
+    public ArrayList<TvShow> getTvShows() {
+        return tvShows;
     }
 
-    private final ArrayList<TvShow> movieList = new ArrayList<>();
+    private final ArrayList<TvShow> tvShows = new ArrayList<>();
     private Context context;
 
     public FavoriteTvAdapter(Context context) {
         this.context = context;
     }
 
-    public void setMovieList(ArrayList<TvShow> movieList) {
+    public void setTvShows(ArrayList<TvShow> tvShows) {
 
-        if (movieList.size() > 0) {
-            this.movieList.clear();
+        if (tvShows.size() > 0) {
+            this.tvShows.clear();
         }
-        this.movieList.addAll(movieList);
-
+        this.tvShows.addAll(tvShows);
         notifyDataSetChanged();
     }
 
@@ -53,14 +51,14 @@ public class FavoriteTvAdapter extends RecyclerView.Adapter<FavoriteTvAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.txtjudul.setText(movieList.get(position).getOriginal_name());
-        holder.txtDescription.setText(movieList.get(position).getOverview());
-        Picasso.get().load(POSTER_PATH+movieList.get(position).getPoster_path()).into(holder.imgPhoto);
+        holder.txtjudul.setText(tvShows.get(position).getOriginal_name());
+        holder.txtDescription.setText(tvShows.get(position).getOverview());
+        Picasso.get().load(POSTER_PATH+ tvShows.get(position).getPoster_path()).into(holder.imgPhoto);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailTvActivity.class);
-                intent.putExtra(DetailTvActivity.EXTRA_TV, movieList.get(position));
+                intent.putExtra(DetailTvActivity.EXTRA_TV, tvShows.get(position));
                 context.startActivity(intent);
             }
         });
@@ -68,7 +66,7 @@ public class FavoriteTvAdapter extends RecyclerView.Adapter<FavoriteTvAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        return tvShows.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

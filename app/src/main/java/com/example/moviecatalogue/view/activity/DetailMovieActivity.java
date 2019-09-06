@@ -106,16 +106,12 @@ public class DetailMovieActivity extends AppCompatActivity {
         }
     }
 
-    private void setAddToFavorite(){
+    private void setAddToFavorite() {
         try {
             if (film != null) {
-                long result = helper.insertMovie(film);
-                if (result>0){
-                    Toast.makeText(this, "Success Add Data ", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(this, "Failed To Add Data", Toast.LENGTH_SHORT).show();
-                }
+                helper.insertMovie(film);
             }
+            Toast.makeText(this, "Success Add Data ", Toast.LENGTH_SHORT).show();
         } catch (Exception e){
             e.printStackTrace();
         }

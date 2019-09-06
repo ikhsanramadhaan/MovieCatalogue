@@ -17,12 +17,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.moviecatalogue.R;
-import com.example.moviecatalogue.ShowDetailInterface;
 import com.example.moviecatalogue.base.api.ApiInterface;
 import com.example.moviecatalogue.base.networks.ApiClient;
 import com.example.moviecatalogue.model.TvResult;
 import com.example.moviecatalogue.model.TvShow;
-import com.example.moviecatalogue.view.activity.DetailMovieActivity;
 import com.example.moviecatalogue.view.adapter.ListViewTvAdapter;
 
 import java.util.ArrayList;
@@ -42,7 +40,6 @@ public class TvshowFragment extends Fragment {
 
     private ListViewTvAdapter adapter;
     private ProgressDialog progressDialog;
-
     private RecyclerView listView;
     private List<TvShow> tvShowArrayList = new ArrayList<>() ;
 

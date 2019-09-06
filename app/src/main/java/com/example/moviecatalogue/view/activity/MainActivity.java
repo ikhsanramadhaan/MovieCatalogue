@@ -12,6 +12,8 @@ import android.view.MenuItem;
 
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.view.fragment.FavoriteFragment;
+import com.example.moviecatalogue.view.fragment.FavoriteMovieFragment;
+import com.example.moviecatalogue.view.fragment.FavoriteTvShowFragment;
 import com.example.moviecatalogue.view.fragment.MovieFragment;
 import com.example.moviecatalogue.view.fragment.TvshowFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

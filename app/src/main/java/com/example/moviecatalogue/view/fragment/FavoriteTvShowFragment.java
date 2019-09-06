@@ -1,10 +1,7 @@
 package com.example.moviecatalogue.view.fragment;
 
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -21,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.moviecatalogue.LoadCallbackTv;
+import com.example.moviecatalogue.base.interfaces.LoadCallbackTv;
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.dbmovie.movie.FavoriteTvHelper;
 import com.example.moviecatalogue.model.TvShow;
@@ -40,7 +37,9 @@ public class FavoriteTvShowFragment extends Fragment implements LoadCallbackTv {
     private ProgressDialog dialog;
     private FavoriteTvHelper helper;
     private TextView textViewEmpty;
-    private ArrayList<TvShow> arrayList = new ArrayList<>();
+    private static final String LIST_STATE_KEY = "key";
+
+    private ArrayList<TvShow> tvShows = new ArrayList<>();
 
     public FavoriteTvShowFragment() {
         // Required empty public constructor
@@ -64,9 +63,9 @@ public class FavoriteTvShowFragment extends Fragment implements LoadCallbackTv {
         dialog = new ProgressDialog(getContext());
         dialog.setMessage(getString(R.string.message));
 
-        helper = FavoriteTvHelper.getInstance(getActivity());
-        helper.open();
         adapter = new FavoriteTvAdapter(getContext());
+        helper = FavoriteTvHelper.getInstance(getActivity());
+        helper.Open();
 
         progressBar.setVisibility(View.INVISIBLE);
         textViewEmpty.setVisibility(View.INVISIBLE);
@@ -76,31 +75,48 @@ public class FavoriteTvShowFragment extends Fragment implements LoadCallbackTv {
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL);
 
         listView.addItemDecoration(itemDecoration);
-        listView.setAdapter(adapter);
-
 
         if (savedInstanceState == null){
-           new LoadNoteAsync(helper,this);
+            new LoadTvAsync(helper, this).execute();
+        }else {
+            final ArrayList<TvShow> arrayList = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
+            assert arrayList != null;
+            tvShows.addAll(arrayList);
+            adapter.setTvShows(arrayList);
         }
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(LIST_STATE_KEY, tvShows);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new LoadTvAsync(helper, this).execute();
+    }
+
     @Override
     public void preExcute() {
         dialog.show();
     }
 
     @Override
-    public void postExcute(ArrayList<TvShow> tvShows) {
+    public void postExcute(ArrayList<TvShow> filmArrayList) {
         dialog.dismiss();
-        adapter.setMovieList(tvShows);
+        adapter.setTvShows(filmArrayList);
         listView.setAdapter(adapter);
+        tvShows.addAll(filmArrayList);
     }
 
-    private static class LoadNoteAsync extends AsyncTask<Void, Void, ArrayList<TvShow>> {
-        private WeakReference<FavoriteTvHelper> favoriteTvHelperWeakReference;
+    private static class LoadTvAsync extends AsyncTask<Void, Void, ArrayList<TvShow>> {
+        private WeakReference<FavoriteTvHelper> favoriteMovieHelperWeakReference;
         private WeakReference<LoadCallbackTv> weakCallback;
 
-        public LoadNoteAsync(FavoriteTvHelper movieHelperWeakReference, LoadCallbackTv callback) {
-            this.favoriteTvHelperWeakReference = new WeakReference<>(movieHelperWeakReference);
+        public LoadTvAsync(FavoriteTvHelper movieHelperWeakReference, LoadCallbackTv callback) {
+            this.favoriteMovieHelperWeakReference = new WeakReference<>(movieHelperWeakReference);
             this.weakCallback = new WeakReference<>(callback);
         }
         @Override
@@ -112,7 +128,7 @@ public class FavoriteTvShowFragment extends Fragment implements LoadCallbackTv {
 
         @Override
         protected ArrayList<TvShow> doInBackground(Void... voids) {
-            return favoriteTvHelperWeakReference.get().getAllTv();
+            return favoriteMovieHelperWeakReference.get().getAllTv();
         }
 
         @Override

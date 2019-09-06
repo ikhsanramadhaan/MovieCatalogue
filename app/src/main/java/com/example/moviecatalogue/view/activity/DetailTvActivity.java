@@ -20,12 +20,12 @@ import static com.example.moviecatalogue.base.networks.ApiUrl.POSTER_PATH;
 
 public class DetailTvActivity extends AppCompatActivity {
     public static final String EXTRA_TV = "extra_tv";
+    private FavoriteTvHelper helper;
     private boolean isFavorite = false;
     private Menu mMenu = null;
-    private TvShow tvShows;
-    private FavoriteTvHelper helper;
-    private int tvId;
-    private String  judul, tahun, deskripsi,  poster;
+    private TvShow tvShow;
+    private int movieId;
+    private String  judul, tahun, deskripsi,poster;
     private Double rating, popularity;
 
     @Override
@@ -37,7 +37,7 @@ public class DetailTvActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         helper = FavoriteTvHelper.getInstance(getApplicationContext());
-        helper.open();
+        helper.Open();
 
         ImageView imageView = findViewById(R.id.photo);
         TextView tvJudul = findViewById(R.id.judul);
@@ -54,21 +54,21 @@ public class DetailTvActivity extends AppCompatActivity {
         tvPopularity.setText(String.valueOf(popularity));
         tvDeskripsi.setText(deskripsi);
 
-        if (helper.checkTv(String.valueOf(tvId))){
+        if (helper.checkTv(String.valueOf(movieId))){
             isFavorite = !isFavorite;
         }
     }
 
     public void getExtraData(){
-        tvShows = getIntent().getParcelableExtra(EXTRA_TV);
-        if (tvShows != null) {
-            tvId = tvShows.getId();
-            judul = tvShows.getOriginal_name();
-            tahun = tvShows.getFirst_air_date();
-            deskripsi = tvShows.getOverview();
-            rating = tvShows.getVoteAverage();
-            popularity = tvShows.getPopularity();
-            poster = tvShows.getPoster_path();
+        tvShow = getIntent().getParcelableExtra(EXTRA_TV);
+        if (tvShow != null) {
+            movieId = tvShow.getId();
+            judul = tvShow.getOriginal_name();
+            tahun = tvShow.getFirst_air_date();
+            deskripsi = tvShow.getOverview();
+            rating = tvShow.getVoteAverage();
+            popularity = tvShow.getPopularity();
+            poster = tvShow.getPoster_path();
         }
     }
 
@@ -87,7 +87,7 @@ public class DetailTvActivity extends AppCompatActivity {
             finish();
         } else if (id == R.id.menu_favorite) {
             if (isFavorite) {
-                helper.deleteTv(tvId);
+                helper.deleteTv(movieId);
                 Toast.makeText(DetailTvActivity.this, "Satu item berhasil dihapus", Toast.LENGTH_SHORT).show();
             } else {
                 setAddToFavorite();
@@ -106,16 +106,12 @@ public class DetailTvActivity extends AppCompatActivity {
         }
     }
 
-    private void setAddToFavorite(){
+    private void setAddToFavorite() {
         try {
-            if (tvShows != null) {
-                long result = helper.insertTv(tvShows);
-                if (result>0){
-                    Toast.makeText(this, "Success Add Data ", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(this, "Failed To Add Data", Toast.LENGTH_SHORT).show();
-                }
+            if (tvShow != null) {
+                helper.insertTv(tvShow);
             }
+            Toast.makeText(this, "Success Add Data ", Toast.LENGTH_SHORT).show();
         } catch (Exception e){
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
     defaultConfig {
+        buildConfigField("String" , "TMDB_API_KEY" , '"3b431ffe04b57f2c4ed06ffaf9917f98"')
         applicationId "com.example.moviecatalogue"
         minSdkVersion 15
         targetSdkVersion 29

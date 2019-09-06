@@ -1,4 +1,4 @@
-package com.example.moviecatalogue;
+package com.example.moviecatalogue.base.interfaces;
 
 import android.database.Cursor;
 

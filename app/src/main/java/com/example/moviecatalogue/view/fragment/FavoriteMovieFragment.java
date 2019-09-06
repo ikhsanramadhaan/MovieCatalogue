@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.moviecatalogue.LoadCatalogueCallback;
+import com.example.moviecatalogue.base.interfaces.LoadCatalogueCallback;
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.dbmovie.movie.FavoriteMovieHelper;
 import com.example.moviecatalogue.model.Film;
@@ -37,6 +37,7 @@ public class FavoriteMovieFragment extends Fragment implements LoadCatalogueCall
     private ProgressDialog dialog;
     private FavoriteMovieHelper helper;
     private TextView textViewEmpty;
+    private final static String LIST_STATE_KEY = "STATE";
 
     private ArrayList<Film> films = new ArrayList<>();
     public FavoriteMovieFragment() {
@@ -75,14 +76,25 @@ public class FavoriteMovieFragment extends Fragment implements LoadCatalogueCall
         listView.addItemDecoration(itemDecoration);
 
         if (savedInstanceState == null){
-            new LoadNoteAsync(helper, this).execute();
+            new LoadFilmAsync(helper, this).execute();
+        }else {
+            final ArrayList<Film> arrayList =savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
+            assert arrayList != null;
+            films.addAll(arrayList);
+            adapter.setFilms(arrayList);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(LIST_STATE_KEY, films);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        new LoadNoteAsync(helper, this).execute();
+        new LoadFilmAsync(helper, this).execute();
     }
 
     @Override
@@ -91,17 +103,18 @@ public class FavoriteMovieFragment extends Fragment implements LoadCatalogueCall
     }
 
     @Override
-    public void postExcute(ArrayList<Film> films) {
+    public void postExcute(ArrayList<Film> filmArrayList) {
         dialog.dismiss();
-        adapter.setTvShows(films);
+        adapter.setFilms(filmArrayList);
         listView.setAdapter(adapter);
+        films.addAll(filmArrayList);
     }
 
-    private static class LoadNoteAsync extends AsyncTask<Void, Void, ArrayList<Film>> {
+    private static class LoadFilmAsync extends AsyncTask<Void, Void, ArrayList<Film>> {
         private WeakReference<FavoriteMovieHelper> favoriteMovieHelperWeakReference;
         private WeakReference<LoadCatalogueCallback> weakCallback;
 
-        public LoadNoteAsync(FavoriteMovieHelper movieHelperWeakReference, LoadCatalogueCallback callback) {
+        public LoadFilmAsync(FavoriteMovieHelper movieHelperWeakReference, LoadCatalogueCallback callback) {
             this.favoriteMovieHelperWeakReference = new WeakReference<>(movieHelperWeakReference);
             this.weakCallback = new WeakReference<>(callback);
         }

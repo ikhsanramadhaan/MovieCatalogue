@@ -22,24 +22,24 @@ import static com.example.moviecatalogue.base.networks.ApiUrl.POSTER_PATH;
 
 public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<Film> tvShows = new ArrayList<>();
+    private ArrayList<Film> films = new ArrayList<>();
 
 
     public FavoriteMovieAdapter(Context context) {
         this.context = context;
     }
 
-    public ArrayList<Film> getTvShows() {
+    public ArrayList<Film> getFilms() {
 
-        return tvShows;
+        return films;
     }
 
-    public void setTvShows(ArrayList<Film> tvShowArrayList) {
-        if (tvShows.size() > 0){
-            tvShows.clear();
+    public void setFilms(ArrayList<Film> tvShowArrayList) {
+        if (films.size() > 0){
+            films.clear();
         }
 
-        this.tvShows.addAll(tvShowArrayList);
+        this.films.addAll(tvShowArrayList);
         notifyDataSetChanged();
     }
 
@@ -52,14 +52,14 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.txtjudul.setText(tvShows.get(position).getTitle());
-        holder.txtDescription.setText(tvShows.get(position).getOverview());
-        Picasso.get().load(POSTER_PATH+tvShows.get(position).getPosterPath()).into(holder.imgPhoto);
+        holder.txtjudul.setText(films.get(position).getTitle());
+        holder.txtDescription.setText(films.get(position).getOverview());
+        Picasso.get().load(POSTER_PATH+ films.get(position).getPosterPath()).into(holder.imgPhoto);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailMovieActivity.class);
-                intent.putExtra(DetailMovieActivity.EXTRA_FILM, tvShows.get(position));
+                intent.putExtra(DetailMovieActivity.EXTRA_FILM, films.get(position));
                 context.startActivity(intent);
             }
         });
@@ -67,7 +67,7 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
 
     @Override
     public int getItemCount() {
-        return tvShows.size();
+        return films.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

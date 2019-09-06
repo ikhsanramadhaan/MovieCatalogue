@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.moviecatalogue.model.Film;
+import com.example.moviecatalogue.model.TvShow;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,14 @@ import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.
 import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_TITLE_MOVIE;
 import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_VOTE_AVERAGE_MOVIE;
 import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.TABLE_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_ORIGINAL_NAME_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_OVERVIEW_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_POPULARITY_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_POSTER_PATH_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_RELEASE_DATE_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_TV_ID;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_VOTE_AVERAGE_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.TABLE_TV;
 
 public class FavoriteMovieHelper {
     private static DatabaseHelper databaseHelper;
@@ -61,7 +70,7 @@ public class FavoriteMovieHelper {
                 null,
                 null,
                 null,
-                _ID + " ASC",
+                COLUMN_MOVIEID + " ASC",
                 null);
         cursor.moveToFirst();
         Film movie;
@@ -86,7 +95,7 @@ public class FavoriteMovieHelper {
         return arrayList;
     }
 
-    public long insertMovie(Film film) {
+    public void insertMovie(Film film) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COLUMN_MOVIEID,film.getId());
         contentValues.put(COLUMN_VOTE_AVERAGE_MOVIE, film.getVoteAverage());
@@ -95,7 +104,8 @@ public class FavoriteMovieHelper {
         contentValues.put(COLUMN_POPULARITY_MOVIE, film.getPopularity());
         contentValues.put(COLUMN_POSTER_PATH_MOVIE, film.getPosterPath());
         contentValues.put(COLUMN_RELEASE_DATE_MOVIE, film.getReleaseDate());
-        return database.insert(TABLE_MOVIE, null, contentValues);
+        database.insert(TABLE_MOVIE, null, contentValues);
+
     }
 
     public void deleteMovie(int id) {
@@ -119,6 +129,8 @@ public class FavoriteMovieHelper {
         cursor.close();
         return checkMovie;
     }
+
+
 
 
 }

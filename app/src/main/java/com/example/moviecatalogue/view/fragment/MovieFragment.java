@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.moviecatalogue.R;
-import com.example.moviecatalogue.ShowDetailInterface;
 import com.example.moviecatalogue.base.api.ApiInterface;
 import com.example.moviecatalogue.base.networks.ApiClient;
 import com.example.moviecatalogue.model.Film;

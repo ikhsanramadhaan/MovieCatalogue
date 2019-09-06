@@ -1,6 +1,5 @@
-package com.example.moviecatalogue;
+package com.example.moviecatalogue.base.interfaces;
 
-import com.example.moviecatalogue.model.Film;
 import com.example.moviecatalogue.model.TvShow;
 
 import java.util.ArrayList;
