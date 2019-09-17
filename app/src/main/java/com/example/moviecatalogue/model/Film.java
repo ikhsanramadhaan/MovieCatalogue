@@ -1,11 +1,24 @@
 package com.example.moviecatalogue.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+
+import static android.provider.BaseColumns._ID;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_OVERVIEW_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_POPULARITY_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_POSTER_PATH_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_RELEASE_DATE_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_TITLE_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_VOTE_AVERAGE_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.getColumnDouble;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.getColumnInt;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.getColumnString;
+
 
 public class Film implements Parcelable {
 
@@ -164,8 +177,6 @@ public class Film implements Parcelable {
         this.voteCount = voteCount;
     }
 
-    public Film() {
-    }
 
     protected Film(Parcel in) {
         overview = in.readString();
@@ -181,6 +192,16 @@ public class Film implements Parcelable {
         id = in.readInt();
         adult = in.readByte() != 0;
         voteCount = in.readInt();
+    }
+
+    public Film(Cursor cursor) {
+        this.overview =  getColumnString(cursor, COLUMN_OVERVIEW_MOVIE);
+        this.title = getColumnString(cursor, COLUMN_TITLE_MOVIE);
+        this.posterPath = getColumnString(cursor, COLUMN_POSTER_PATH_MOVIE);
+        this.releaseDate = getColumnString(cursor, COLUMN_RELEASE_DATE_MOVIE);
+        this.voteAverage = getColumnDouble(cursor, COLUMN_VOTE_AVERAGE_MOVIE);
+        this.popularity = getColumnDouble(cursor, COLUMN_POPULARITY_MOVIE);
+        this.id = getColumnInt(cursor, _ID);
     }
 
     @Override

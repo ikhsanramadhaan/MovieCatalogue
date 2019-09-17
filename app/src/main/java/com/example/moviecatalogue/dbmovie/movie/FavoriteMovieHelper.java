@@ -63,71 +63,36 @@ public class FavoriteMovieHelper {
             database.close();
     }
 
-    public ArrayList<Film> getAllMovie() {
-        ArrayList<Film> arrayList = new ArrayList<>();
-        Cursor cursor = database.query(TABLE_MOVIE, null,
-                null,
-                null,
-                null,
-                null,
-                COLUMN_MOVIEID + " ASC",
-                null);
-        cursor.moveToFirst();
-        Film movie;
-        if (cursor.getCount() > 0) {
-            do {
-                movie = new Film();
-                movie.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_MOVIEID))));
-                movie.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_TITLE_MOVIE)));
-                movie.setVoteAverage(Double.parseDouble(cursor.getString(cursor.getColumnIndex(COLUMN_VOTE_AVERAGE_MOVIE))));
-                movie.setPosterPath(cursor.getString(cursor.getColumnIndex(COLUMN_POSTER_PATH_MOVIE)));
-                movie.setOverview(cursor.getString(cursor.getColumnIndex(DbContract.FavoriteMovie.COLUMN_OVERVIEW_MOVIE)));
-                movie.setPopularity(Double.parseDouble(cursor.getString(cursor.getColumnIndex(COLUMN_POPULARITY_MOVIE))));
-                movie.setReleaseDate(cursor.getString(cursor.getColumnIndex(COLUMN_RELEASE_DATE_MOVIE)));
-
-                arrayList.add(movie);
-
-                cursor.moveToNext();
-
-            } while (!cursor.isAfterLast());
-        }
-        cursor.close();
-        return arrayList;
+    Cursor queryByIdProvider(String id) {
+        return database.query(TABLE_MOVIE, null
+                , _ID   + " = ?"
+                , new String[]{id}
+                , null
+                , null
+                , null
+                , null);
     }
 
-    public void insertMovie(Film film) {
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_MOVIEID,film.getId());
-        contentValues.put(COLUMN_VOTE_AVERAGE_MOVIE, film.getVoteAverage());
-        contentValues.put(COLUMN_TITLE_MOVIE, film.getTitle());
-        contentValues.put(COLUMN_OVERVIEW_MOVIE, film.getOverview());
-        contentValues.put(COLUMN_POPULARITY_MOVIE, film.getPopularity());
-        contentValues.put(COLUMN_POSTER_PATH_MOVIE, film.getPosterPath());
-        contentValues.put(COLUMN_RELEASE_DATE_MOVIE, film.getReleaseDate());
-        database.insert(TABLE_MOVIE, null, contentValues);
-
+    Cursor queryProvider() {
+        return database.query(TABLE_MOVIE
+                , null
+                , null
+                , null
+                , null
+                , null
+                , _ID + " ASC");
     }
 
-    public void deleteMovie(int id) {
-        database = databaseHelper.getWritableDatabase();
-        database.delete(TABLE_MOVIE, COLUMN_MOVIEID + "=" + id, null);
+    long insertProvider(ContentValues values) {
+        return database.insert(TABLE_MOVIE, null, values);
     }
 
-    public boolean checkMovie(String id) {
-        database = databaseHelper.getWritableDatabase();
-        String selectString = "SELECT * FROM " + TABLE_MOVIE + " WHERE " + COLUMN_MOVIEID + " =?";
-        Cursor cursor = database.rawQuery(selectString, new String[]{id});
-        boolean checkMovie = false;
-        if (cursor.moveToFirst()) {
-            checkMovie = true;
-            int count = 0;
-            while (cursor.moveToNext()) {
-                count++;
-            }
-            Log.d(TAG, String.format("%d records found", count));
-        }
-        cursor.close();
-        return checkMovie;
+    int updateProvider(String id, ContentValues values) {
+        return database.update(TABLE_MOVIE, values, _ID + " =?", new String[]{id});
+    }
+
+    int deleteProvider(String id) {
+        return database.delete(TABLE_MOVIE, _ID + " = ?", new String[]{id});
     }
 
 

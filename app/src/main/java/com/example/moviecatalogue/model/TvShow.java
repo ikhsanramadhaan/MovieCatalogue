@@ -1,9 +1,21 @@
 package com.example.moviecatalogue.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+
+import static android.provider.BaseColumns._ID;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_ORIGINAL_NAME_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_OVERVIEW_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_POPULARITY_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_POSTER_PATH_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_RELEASE_DATE_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_VOTE_AVERAGE_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.getColumnDouble;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.getColumnInt;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.getColumnString;
 
 public class TvShow implements Parcelable {
 
@@ -107,6 +119,16 @@ public class TvShow implements Parcelable {
     }
 
     public TvShow() {
+    }
+
+    public TvShow(Cursor cursor) {
+        this.id = getColumnInt(cursor, _ID);
+        this.original_name = getColumnString(cursor, COLUMN_ORIGINAL_NAME_TV );;
+        this.overview = getColumnString(cursor, COLUMN_OVERVIEW_TV);;
+        this.poster_path = getColumnString(cursor, COLUMN_POSTER_PATH_TV);;
+        this.first_air_date = getColumnString(cursor, COLUMN_RELEASE_DATE_TV);;
+        this.voteAverage = getColumnDouble(cursor, COLUMN_VOTE_AVERAGE_TV);;
+        this.popularity = getColumnDouble(cursor, COLUMN_POPULARITY_TV);;
     }
 
     protected TvShow(Parcel in) {
