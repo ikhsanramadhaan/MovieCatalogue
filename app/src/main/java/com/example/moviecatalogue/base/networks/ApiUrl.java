@@ -11,6 +11,8 @@ public class ApiUrl {
 
     public static final String PATH_MOVIE="movie/upcoming";
     public static final String PATH_TV="tv/popular";
+    public static final String SEARCH_MOVIE="search/movie";
+    public static final String SEARCH_TV="search/tv";
 
     public static final String API_KEY = BuildConfig.TMDB_API_KEY;
     public static final String LANGUAGE_ENGLISH = "en-US";

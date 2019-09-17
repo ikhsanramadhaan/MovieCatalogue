@@ -12,13 +12,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.base.api.ApiInterface;
 import com.example.moviecatalogue.base.networks.ApiClient;
+import com.example.moviecatalogue.model.MovieResult;
 import com.example.moviecatalogue.model.TvResult;
 import com.example.moviecatalogue.model.TvShow;
 import com.example.moviecatalogue.view.adapter.ListViewTvAdapter;
@@ -31,6 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.moviecatalogue.base.networks.ApiUrl.API_KEY;
+import static com.example.moviecatalogue.base.networks.ApiUrl.LANGUAGE_ENGLISH;
 
 
 /**
@@ -47,6 +52,11 @@ public class TvshowFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,9 +91,26 @@ public class TvshowFragment extends Fragment {
             response();
         }
 
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                responseSearch(s);
+                return true;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String s) {
+                responseSearch(s);
+                return true;
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -131,6 +158,29 @@ public class TvshowFragment extends Fragment {
                 Toast.makeText(getContext(), "data not found", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void responseSearch(String query){
+        ApiInterface apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        Call<TvResult> call = apiInterface.getSeachTv(API_KEY, LANGUAGE_ENGLISH, query);
+//        progressDialog.show();
+        call.enqueue(new Callback<TvResult>() {
+            @Override
+            public void onResponse(Call<TvResult> call, Response<TvResult> response) {
+                if (response.isSuccessful()){
+                    tvShowArrayList = response.body().getGetTvShow();
+//                    progressDialog.dismiss();
+                    adapter.setTvShowArrayList(tvShowArrayList);
+                    listView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TvResult> call, Throwable t) {
+            }
+        });
+
     }
 
 }
