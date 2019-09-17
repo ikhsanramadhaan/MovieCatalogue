@@ -2,6 +2,7 @@ package com.example.moviecatalogue.view.fragment;
 
 
 import android.app.ProgressDialog;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -18,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.moviecatalogue.base.interfaces.LoadCatalogueCallback;
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.dbmovie.movie.FavoriteMovieHelper;
 import com.example.moviecatalogue.model.Film;
@@ -26,11 +26,14 @@ import com.example.moviecatalogue.view.adapter.FavoriteMovieAdapter;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Objects;
+
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.CONTENT_URI_MOVIE;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoriteMovieFragment extends Fragment implements LoadCatalogueCallback {
+public class FavoriteMovieFragment extends Fragment{
     private RecyclerView listView;
     private FavoriteMovieAdapter adapter;
     private ProgressBar progressBar;
@@ -38,8 +41,8 @@ public class FavoriteMovieFragment extends Fragment implements LoadCatalogueCall
     private FavoriteMovieHelper helper;
     private TextView textViewEmpty;
     private final static String LIST_STATE_KEY = "STATE";
+    private Cursor list_movie;
 
-    private ArrayList<Film> films = new ArrayList<>();
     public FavoriteMovieFragment() {
         // Required empty public constructor
     }
@@ -62,78 +65,78 @@ public class FavoriteMovieFragment extends Fragment implements LoadCatalogueCall
         dialog = new ProgressDialog(getContext());
         dialog.setMessage(getString(R.string.message));
 
-        adapter = new FavoriteMovieAdapter(getContext());
+
         helper = FavoriteMovieHelper.getInstance(getActivity());
         helper.Open();
 
         progressBar.setVisibility(View.INVISIBLE);
         textViewEmpty.setVisibility(View.INVISIBLE);
 
+
+//        if (savedInstanceState == null){
+//
+//        }else {
+//            final ArrayList<Film> arrayList =savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
+//            assert arrayList != null;
+//            adapter.setMovie_cursor(list_movie);
+//        }
+
+        new LoadFilmAsync().execute();
+        showRecyclerMovie();
+    }
+
+    private void showRecyclerMovie() {
+        adapter = new FavoriteMovieAdapter(getContext());
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
         listView.setHasFixedSize(true);
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL);
-
         listView.addItemDecoration(itemDecoration);
+        adapter.setMovie_cursor(list_movie);
+        listView.setAdapter(adapter);
 
-        if (savedInstanceState == null){
-            new LoadFilmAsync(helper, this).execute();
-        }else {
-            final ArrayList<Film> arrayList =savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
-            assert arrayList != null;
-            films.addAll(arrayList);
-            adapter.setFilms(arrayList);
-        }
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(LIST_STATE_KEY, films);
-    }
+//    @Override
+//    public void onSaveInstanceState(@NonNull Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        outState.putParcelable(LIST_STATE_KEY, list_movie);
+//    }
 
     @Override
     public void onResume() {
         super.onResume();
-        new LoadFilmAsync(helper, this).execute();
+        new LoadFilmAsync().execute();
+        showRecyclerMovie();
     }
 
-    @Override
-    public void preExcute() {
-        dialog.show();
-    }
 
-    @Override
-    public void postExcute(ArrayList<Film> filmArrayList) {
-        dialog.dismiss();
-        adapter.setFilms(filmArrayList);
-        listView.setAdapter(adapter);
-        films.addAll(filmArrayList);
-    }
+    private class LoadFilmAsync extends AsyncTask<Void, Void, Cursor> {
 
-    private static class LoadFilmAsync extends AsyncTask<Void, Void, ArrayList<Film>> {
-        private WeakReference<FavoriteMovieHelper> favoriteMovieHelperWeakReference;
-        private WeakReference<LoadCatalogueCallback> weakCallback;
-
-        public LoadFilmAsync(FavoriteMovieHelper movieHelperWeakReference, LoadCatalogueCallback callback) {
-            this.favoriteMovieHelperWeakReference = new WeakReference<>(movieHelperWeakReference);
-            this.weakCallback = new WeakReference<>(callback);
-        }
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            weakCallback.get().preExcute();
+            dialog.show();
 
         }
 
         @Override
-        protected ArrayList<Film> doInBackground(Void... voids) {
-            return favoriteMovieHelperWeakReference.get().getAllMovie();
+        protected Cursor doInBackground(Void... voids) {
+            return getContext().getContentResolver()
+                    .query(
+                            CONTENT_URI_MOVIE,
+                            null,
+                            null,
+                            null,
+                            null);
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Film> notes) {
-            super.onPostExecute(notes);
-            weakCallback.get().postExcute(notes);
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+            dialog.dismiss();
+            list_movie = cursor;
+            adapter.setMovie_cursor(list_movie);
+            adapter.notifyDataSetChanged();
 
         }
     }

@@ -2,6 +2,7 @@ package com.example.moviecatalogue.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,25 +23,21 @@ import static com.example.moviecatalogue.base.networks.ApiUrl.POSTER_PATH;
 
 public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdapter.ViewHolder> {
     private Context context;
-    private ArrayList<Film> films = new ArrayList<>();
+    private Cursor movie_cursor;
 
 
     public FavoriteMovieAdapter(Context context) {
         this.context = context;
     }
 
-    public ArrayList<Film> getFilms() {
-
-        return films;
+    public void setMovie_cursor(Cursor movie_cursor) {
+        this.movie_cursor = movie_cursor;
     }
-
-    public void setFilms(ArrayList<Film> tvShowArrayList) {
-        if (films.size() > 0){
-            films.clear();
+    private Film getItem(int position) {
+        if (!movie_cursor.moveToPosition(position)) {
+            throw new IllegalStateException("Position invalid");
         }
-
-        this.films.addAll(tvShowArrayList);
-        notifyDataSetChanged();
+        return new Film(movie_cursor);
     }
 
     @NonNull
@@ -52,14 +49,15 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.txtjudul.setText(films.get(position).getTitle());
-        holder.txtDescription.setText(films.get(position).getOverview());
-        Picasso.get().load(POSTER_PATH+ films.get(position).getPosterPath()).into(holder.imgPhoto);
+        final Film film = getItem(position);
+        holder.txtjudul.setText(film.getTitle());
+        holder.txtDescription.setText(film.getOverview());
+        Picasso.get().load(POSTER_PATH+ film.getPosterPath()).into(holder.imgPhoto);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailMovieActivity.class);
-                intent.putExtra(DetailMovieActivity.EXTRA_FILM, films.get(position));
+                intent.putExtra(DetailMovieActivity.EXTRA_FILM, film);
                 context.startActivity(intent);
             }
         });
@@ -67,7 +65,8 @@ public class FavoriteMovieAdapter extends RecyclerView.Adapter<FavoriteMovieAdap
 
     @Override
     public int getItemCount() {
-        return films.size();
+        if (movie_cursor == null) return 0;
+        return movie_cursor.getCount();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

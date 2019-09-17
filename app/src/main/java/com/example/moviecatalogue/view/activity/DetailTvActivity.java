@@ -3,6 +3,9 @@ package com.example.moviecatalogue.view.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +19,16 @@ import com.example.moviecatalogue.dbmovie.movie.FavoriteTvHelper;
 import com.example.moviecatalogue.model.TvShow;
 import com.squareup.picasso.Picasso;
 
+import static android.provider.BaseColumns._ID;
 import static com.example.moviecatalogue.base.networks.ApiUrl.POSTER_PATH;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.CONTENT_URI_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_ORIGINAL_NAME_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_OVERVIEW_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_POPULARITY_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_POSTER_PATH_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_RELEASE_DATE_TV;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteTv.COLUMN_VOTE_AVERAGE_TV;
+
 
 public class DetailTvActivity extends AppCompatActivity {
     public static final String EXTRA_TV = "extra_tv";
@@ -54,9 +66,8 @@ public class DetailTvActivity extends AppCompatActivity {
         tvPopularity.setText(String.valueOf(popularity));
         tvDeskripsi.setText(deskripsi);
 
-        if (helper.checkTv(String.valueOf(movieId))){
-            isFavorite = !isFavorite;
-        }
+        loadTvshow();
+
     }
 
     public void getExtraData(){
@@ -87,10 +98,10 @@ public class DetailTvActivity extends AppCompatActivity {
             finish();
         } else if (id == R.id.menu_favorite) {
             if (isFavorite) {
-                helper.deleteTv(movieId);
+                removeFavorite();
                 Toast.makeText(DetailTvActivity.this, "Satu item berhasil dihapus", Toast.LENGTH_SHORT).show();
             } else {
-                setAddToFavorite();
+                addFavorite();
             }
             isFavorite = !isFavorite;
             setIconFavorite();
@@ -106,14 +117,46 @@ public class DetailTvActivity extends AppCompatActivity {
         }
     }
 
-    private void setAddToFavorite() {
-        try {
-            if (tvShow != null) {
-                helper.insertTv(tvShow);
-            }
-            Toast.makeText(this, "Success Add Data ", Toast.LENGTH_SHORT).show();
-        } catch (Exception e){
-            e.printStackTrace();
+    private void loadTvshow() {
+        FavoriteMovieHelper movieHelper = FavoriteMovieHelper.getInstance(getApplicationContext());
+        movieHelper.Open();
+        Cursor cursor = getContentResolver().query(
+                Uri.parse(CONTENT_URI_TV + "/" + tvShow.getId()),
+                null,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) isFavorite = true;
+            cursor.close();
         }
+    }
+
+    private void addFavorite() {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(_ID, tvShow.getId());
+        contentValues.put(COLUMN_ORIGINAL_NAME_TV, tvShow.getOriginal_name());
+        contentValues.put(COLUMN_POSTER_PATH_TV, tvShow.getPoster_path());
+        contentValues.put(COLUMN_OVERVIEW_TV, tvShow.getOverview());
+        contentValues.put(COLUMN_VOTE_AVERAGE_TV, tvShow.getVoteAverage());
+        contentValues.put(COLUMN_RELEASE_DATE_TV, tvShow.getFirst_air_date());
+        contentValues.put(COLUMN_POPULARITY_TV, tvShow.getPopularity());
+
+        getContentResolver().insert(CONTENT_URI_TV, contentValues);
+
+        Toast.makeText(this,"Berhasil", Toast.LENGTH_LONG).show();
+    }
+
+    private void removeFavorite() {
+
+        getContentResolver().delete(
+                Uri.parse(CONTENT_URI_TV + "/" + tvShow.getId()),
+                null,
+                null
+        );
+        Toast.makeText(this, "berhasil di hapus", Toast.LENGTH_LONG).show();
     }
 }

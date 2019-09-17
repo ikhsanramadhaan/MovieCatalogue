@@ -110,7 +110,9 @@ public class MyProvider extends ContentProvider {
                 added = 0;
                 break;
         }
-        getContext().getContentResolver().notifyChange(uri, null);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
+        }
         return contentUri;
 
     }
@@ -132,8 +134,10 @@ public class MyProvider extends ContentProvider {
 
         if (deleted > 0) {
 
-            getContext().getContentResolver().notifyChange(uri, null);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
             }
+        }
         return deleted;
     }
 
@@ -153,8 +157,10 @@ public class MyProvider extends ContentProvider {
         }
 
         if (updated > 0) {
-               getContext().getContentResolver().notifyChange(uri, null);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Objects.requireNonNull(getContext()).getContentResolver().notifyChange(uri, null);
             }
+        }
         return updated;
     }
 }

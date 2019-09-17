@@ -3,6 +3,9 @@ package com.example.moviecatalogue.view.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +18,15 @@ import com.example.moviecatalogue.dbmovie.movie.FavoriteMovieHelper;
 import com.example.moviecatalogue.model.Film;
 import com.squareup.picasso.Picasso;
 
+import static android.provider.BaseColumns._ID;
 import static com.example.moviecatalogue.base.networks.ApiUrl.POSTER_PATH;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.CONTENT_URI_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_OVERVIEW_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_POPULARITY_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_POSTER_PATH_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_RELEASE_DATE_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_TITLE_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.FavoriteMovie.COLUMN_VOTE_AVERAGE_MOVIE;
 
 public class DetailMovieActivity extends AppCompatActivity {
     public static final String EXTRA_FILM = "extra_film";
@@ -54,9 +65,7 @@ public class DetailMovieActivity extends AppCompatActivity {
         tvPopularity.setText(String.valueOf(popularity));
         tvDeskripsi.setText(deskripsi);
 
-            if (helper.checkMovie(String.valueOf(movieId))){
-                isFavorite = !isFavorite;
-            }
+        loadMovie();
     }
 
     public void getExtraData(){
@@ -87,10 +96,10 @@ public class DetailMovieActivity extends AppCompatActivity {
                 finish();
             } else if (id == R.id.menu_favorite) {
                 if (isFavorite) {
-                    helper.deleteMovie(movieId);
+                    removeFavorite();
                     Toast.makeText(DetailMovieActivity.this, "Satu item berhasil dihapus", Toast.LENGTH_SHORT).show();
                 } else {
-                    setAddToFavorite();
+                    addFavorite();
                 }
                 isFavorite = !isFavorite;
                 setIconFavorite();
@@ -106,15 +115,48 @@ public class DetailMovieActivity extends AppCompatActivity {
         }
     }
 
-    private void setAddToFavorite() {
-        try {
-            if (film != null) {
-                helper.insertMovie(film);
-            }
-            Toast.makeText(this, "Success Add Data ", Toast.LENGTH_SHORT).show();
-        } catch (Exception e){
-            e.printStackTrace();
+
+    private void loadMovie() {
+        FavoriteMovieHelper movieHelper = FavoriteMovieHelper.getInstance(getApplicationContext());
+        movieHelper.Open();
+        Cursor cursor = getContentResolver().query(
+                Uri.parse(CONTENT_URI_MOVIE + "/" + film.getId()),
+                null,
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) isFavorite = true;
+            cursor.close();
         }
+    }
+
+    private void addFavorite() {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(_ID, film.getId());
+        contentValues.put(COLUMN_TITLE_MOVIE, film.getTitle());
+        contentValues.put(COLUMN_POSTER_PATH_MOVIE, film.getPosterPath());
+        contentValues.put(COLUMN_OVERVIEW_MOVIE, film.getOverview());
+        contentValues.put(COLUMN_VOTE_AVERAGE_MOVIE, film.getVoteAverage());
+        contentValues.put(COLUMN_RELEASE_DATE_MOVIE, film.getReleaseDate());
+        contentValues.put(COLUMN_POPULARITY_MOVIE, film.getPopularity());
+
+        getContentResolver().insert(CONTENT_URI_MOVIE, contentValues);
+
+        Toast.makeText(this,"Berhasil", Toast.LENGTH_LONG).show();
+    }
+
+    private void removeFavorite() {
+
+        getContentResolver().delete(
+                Uri.parse(CONTENT_URI_MOVIE + "/" + film.getId()),
+                null,
+                null
+        );
+        Toast.makeText(this, "berhasil di hapus", Toast.LENGTH_LONG).show();
     }
 }
 

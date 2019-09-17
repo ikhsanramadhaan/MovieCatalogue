@@ -2,6 +2,7 @@ package com.example.moviecatalogue.view.fragment;
 
 
 import android.app.ProgressDialog;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -18,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.moviecatalogue.base.interfaces.LoadCallbackTv;
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.dbmovie.movie.FavoriteTvHelper;
 import com.example.moviecatalogue.model.TvShow;
@@ -27,16 +27,21 @@ import com.example.moviecatalogue.view.adapter.FavoriteTvAdapter;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.CONTENT_URI_MOVIE;
+import static com.example.moviecatalogue.dbmovie.movie.DbContract.CONTENT_URI_TV;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoriteTvShowFragment extends Fragment implements LoadCallbackTv {
+public class FavoriteTvShowFragment extends Fragment {
     private RecyclerView listView;
     private FavoriteTvAdapter adapter;
     private ProgressBar progressBar;
     private ProgressDialog dialog;
     private FavoriteTvHelper helper;
     private TextView textViewEmpty;
+    private TvShow tvShow;
+    private Cursor list_tv;
     private static final String LIST_STATE_KEY = "key";
 
     private ArrayList<TvShow> tvShows = new ArrayList<>();
@@ -76,14 +81,27 @@ public class FavoriteTvShowFragment extends Fragment implements LoadCallbackTv {
 
         listView.addItemDecoration(itemDecoration);
 
-        if (savedInstanceState == null){
-            new LoadTvAsync(helper, this).execute();
-        }else {
-            final ArrayList<TvShow> arrayList = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
-            assert arrayList != null;
-            tvShows.addAll(arrayList);
-            adapter.setTvShows(arrayList);
-        }
+//        if (savedInstanceState == null){
+//            new LoadTvAsync(helper, this).execute();
+//        }else {
+//            final ArrayList<TvShow> arrayList = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
+//            assert arrayList != null;
+//            tvShows.addAll(arrayList);
+//            adapter.setTvShows(arrayList);
+//        }
+
+        new LoadTvAsync().execute();
+        showRecyclerMovie();
+    }
+    private void showRecyclerMovie() {
+        adapter = new FavoriteTvAdapter(getContext());
+        listView.setLayoutManager(new LinearLayoutManager(getContext()));
+        listView.setHasFixedSize(true);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL);
+        listView.addItemDecoration(itemDecoration);
+        adapter.setCursor(list_tv);
+        listView.setAdapter(adapter);
+
     }
 
     @Override
@@ -95,46 +113,38 @@ public class FavoriteTvShowFragment extends Fragment implements LoadCallbackTv {
     @Override
     public void onResume() {
         super.onResume();
-        new LoadTvAsync(helper, this).execute();
+        new LoadTvAsync().execute();
+        showRecyclerMovie();
+
     }
 
-    @Override
-    public void preExcute() {
-        dialog.show();
-    }
+    private class LoadTvAsync extends AsyncTask<Void, Void, Cursor> {
 
-    @Override
-    public void postExcute(ArrayList<TvShow> filmArrayList) {
-        dialog.dismiss();
-        adapter.setTvShows(filmArrayList);
-        listView.setAdapter(adapter);
-        tvShows.addAll(filmArrayList);
-    }
-
-    private static class LoadTvAsync extends AsyncTask<Void, Void, ArrayList<TvShow>> {
-        private WeakReference<FavoriteTvHelper> favoriteMovieHelperWeakReference;
-        private WeakReference<LoadCallbackTv> weakCallback;
-
-        public LoadTvAsync(FavoriteTvHelper movieHelperWeakReference, LoadCallbackTv callback) {
-            this.favoriteMovieHelperWeakReference = new WeakReference<>(movieHelperWeakReference);
-            this.weakCallback = new WeakReference<>(callback);
-        }
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            weakCallback.get().preExcute();
+            dialog.show();
 
         }
 
         @Override
-        protected ArrayList<TvShow> doInBackground(Void... voids) {
-            return favoriteMovieHelperWeakReference.get().getAllTv();
+        protected Cursor doInBackground(Void... voids) {
+            return getContext().getContentResolver()
+                    .query(
+                            CONTENT_URI_TV,
+                            null,
+                            null,
+                            null,
+                            null);
         }
 
         @Override
-        protected void onPostExecute(ArrayList<TvShow> notes) {
-            super.onPostExecute(notes);
-            weakCallback.get().postExcute(notes);
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+            dialog.dismiss();
+            list_tv = cursor;
+            adapter.setCursor(list_tv);
+            adapter.notifyDataSetChanged();
 
         }
     }

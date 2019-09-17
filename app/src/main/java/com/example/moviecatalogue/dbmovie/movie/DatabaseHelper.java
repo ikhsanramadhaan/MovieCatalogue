@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE = "moviedb";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
 
     public DatabaseHelper(Context context) {
@@ -20,7 +20,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_MOVIE ="CREATE TABLE IF NOT EXISTS " + DbContract.FavoriteMovie.TABLE_MOVIE + " (" +
             DbContract.FavoriteMovie._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            DbContract.FavoriteMovie.COLUMN_MOVIEID + " INTEGER NOT NULL," +
             DbContract.FavoriteMovie.COLUMN_VOTE_AVERAGE_MOVIE + " DOUBLE NOT NULL," +
             DbContract.FavoriteMovie.COLUMN_TITLE_MOVIE + " TEXT NOT NULL," +
             DbContract.FavoriteMovie.COLUMN_POPULARITY_MOVIE + " DOUBLE NOT NULL," +
@@ -30,7 +29,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_TV ="CREATE TABLE IF NOT EXISTS " + DbContract.FavoriteTv.TABLE_TV + " (" +
             DbContract.FavoriteTv._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            DbContract.FavoriteTv.COLUMN_TV_ID + " INTEGER NOT NULL," +
             DbContract.FavoriteTv.COLUMN_OVERVIEW_TV + " TEXT NOT NULL," +
             DbContract.FavoriteTv.COLUMN_POSTER_PATH_TV + " TEXT NOT NULL," +
             DbContract.FavoriteTv.COLUMN_VOTE_AVERAGE_TV + " DOUBLE NOT NULL," +
