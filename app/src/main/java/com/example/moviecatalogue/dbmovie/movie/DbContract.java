@@ -12,6 +12,9 @@ public class  DbContract {
 
     public static final String AUTHORITY = "com.example.moviecatalogue";
     private static final String SCHEME = "content";
+
+    public static final String TVSHOW = "TvShow";
+    public static final String MOVIE = "Movie";
     public DbContract() {
     }
     public static final Uri CONTENT_URI_TV = new Uri.Builder()

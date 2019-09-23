@@ -88,7 +88,9 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_change_settings){
             Intent intent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
             startActivity(intent);
-
+        }else if (item.getItemId() == R.id.reminder){
+            Intent intent = new Intent(this, ReminderActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

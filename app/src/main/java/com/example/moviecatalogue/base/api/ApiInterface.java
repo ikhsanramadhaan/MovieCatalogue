@@ -32,4 +32,11 @@ public interface ApiInterface {
                                  @Query("language") String language,
                                  @Query("query") String query);
 
+
+    @GET(PATH_MOVIE)
+    Call<MovieResult> getMovieToday(@Query("api_key") String key,
+                                           @Query("primary_release_date.gte") String dateGte,
+                                           @Query("primary_release_date.lte") String dateIte);
+
+
 }

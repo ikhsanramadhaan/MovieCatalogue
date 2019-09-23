@@ -3,10 +3,13 @@ package com.example.moviecatalogue.view.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.dbmovie.movie.FavoriteMovieHelper;
 import com.example.moviecatalogue.model.Film;
+import com.example.moviecatalogue.widget.FavoriteWidget;
 import com.squareup.picasso.Picasso;
 
 import static android.provider.BaseColumns._ID;
@@ -103,6 +107,7 @@ public class DetailMovieActivity extends AppCompatActivity {
                 }
                 isFavorite = !isFavorite;
                 setIconFavorite();
+                updateWidget();
             }
             return super.onOptionsItemSelected(item);
         }
@@ -157,6 +162,17 @@ public class DetailMovieActivity extends AppCompatActivity {
                 null
         );
         Toast.makeText(this, "berhasil di hapus", Toast.LENGTH_LONG).show();
+    }
+    private void updateWidget() {
+        try {
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(getApplicationContext());
+            ComponentName componentName = new ComponentName(getApplicationContext(), FavoriteWidget.class);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(componentName);
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.stack_view);
+        }catch (IllegalStateException e){
+            Log.d("DETAIL", "updateWidget: "+e.getMessage());
+        }
+
     }
 }
 

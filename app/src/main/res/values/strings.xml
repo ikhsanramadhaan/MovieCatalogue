@@ -25,5 +25,15 @@
     <string name="detail_fav_movie">Detail Favorite Movie</string>
     <string name="title_delete">Delete</string>
     <string name="search">Search</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="daily_des">Remind You For Open App Daily</string>
+    <string name="today_reminder">Today Reminder</string>
+    <string name="realese_des">Remind You Latest Movie</string>
+    <string name="reminder">Reminder</string>
+    <string name="daily_msg">Dont Forget To Open Our App</string>
+    <string name="today_msg">Realese Today :%s</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="empty_text">No Data</string>
 
 </resources>

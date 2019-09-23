@@ -9,8 +9,8 @@ public class ApiUrl {
     public static final String BASE_URL="https://api.themoviedb.org/3/";
     public static final String POSTER_PATH ="https://image.tmdb.org/t/p/w342/";
 
-    public static final String PATH_MOVIE="movie/upcoming";
-    public static final String PATH_TV="tv/popular";
+    public static final String PATH_MOVIE="discover/movie";
+    public static final String PATH_TV="discover/tv";
     public static final String SEARCH_MOVIE="search/movie";
     public static final String SEARCH_TV="search/tv";
 

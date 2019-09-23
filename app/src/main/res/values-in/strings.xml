@@ -24,4 +24,15 @@
     <string name="change_language_settings">Ubah Pengaturan Bahasa</string>
     <string name="detail_movie">Detail Film</string>
     <string name="detail_tv">Detail Acara TV</string>
+    <string name="search">Cari</string>
+    <string name="daily_reminder">Pengingat Setiap Hari</string>
+    <string name="daily_des">Mengingatkan anda untuk membuka aplikasi</string>
+    <string name="today_reminder">Pengingat Per Hari</string>
+    <string name="realese_des">Mengingatkan Film Terbaru</string>
+    <string name="reminder">Pengingat</string>
+    <string name="daily_msg">Jangan Lupa Membuka Aplikasi</string>
+    <string name="today_msg">Realese Today :%s</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Tambah Widget</string>
+    <string name="empty_text">Tidak Ada Data</string>
 </resources>
