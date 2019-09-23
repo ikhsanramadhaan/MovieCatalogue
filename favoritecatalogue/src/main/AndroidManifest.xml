@@ -2,6 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.favoritecatalogue">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission
+    android:name="com.example.moviecatalogue.WRITE_DATABASE"
+    android:label="Write Database"
+    android:protectionLevel="normal" />
+    <uses-permission
+        android:name="com.example.moviecatalogue.READ_DATABASE"
+        android:label="Read Database"
+        android:protectionLevel="normal" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".DetailActivityTvShow"></activity>
+        <activity android:name=".DetailActivityMovie" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

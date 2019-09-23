@@ -1,3 +1,38 @@
 <resources>
     <string name="app_name">FavoriteCatalogue</string>
+    <string name="title_movies">Movies</string>
+    <string name="title_tvshows">Tv Shows</string>
+
+    <string name="title">Movie Title</string>
+    <string name="rating">Movie Rating</string>
+    <string name="popularity">Movie Popularity</string>
+    <string name="description">Movie Description</string>
+    <string name="release">Movie Release</string>
+    <string name="message">Please Wait...</string>
+
+    <string name="change_language_settings">Change Language Settings</string>
+    <string name="detail_movie">Detail Movie</string>
+    <string name="detail_tv">Detail Tv Show</string>
+    <string name="title_fav">Favorite</string>
+    <string name="remove">delete</string>
+    <string name="remove_confirm">Are You Sure?</string>
+    <string name="title_fav_movies">Favorite Movies</string>
+    <string name="title_fav_tvshows">Favorite Tv Show</string>
+    <string name="view_empty_data">Empty Data</string>
+    <string name="detail_fav_movie">Detail Favorite Movie</string>
+    <string name="title_delete">Delete</string>
+    <string name="search">Search</string>
+    <string name="daily_reminder">Daily Reminder</string>
+    <string name="daily_des">Remind You For Open App Daily</string>
+    <string name="today_reminder">Today Reminder</string>
+    <string name="realese_des">Remind You Latest Movie</string>
+    <string name="reminder">Reminder</string>
+    <string name="daily_msg">Dont Forget To Open Our App</string>
+    <string name="today_msg">Realese Today :%s</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="empty_text">No Data</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

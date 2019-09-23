@@ -81,15 +81,6 @@ public class FavoriteTvShowFragment extends Fragment {
 
         listView.addItemDecoration(itemDecoration);
 
-//        if (savedInstanceState == null){
-//            new LoadTvAsync(helper, this).execute();
-//        }else {
-//            final ArrayList<TvShow> arrayList = savedInstanceState.getParcelableArrayList(LIST_STATE_KEY);
-//            assert arrayList != null;
-//            tvShows.addAll(arrayList);
-//            adapter.setTvShows(arrayList);
-//        }
-
         new LoadTvAsync().execute();
         showRecyclerMovie();
     }

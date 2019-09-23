@@ -1,19 +1,17 @@
 package com.example.moviecatalogue.view.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.view.fragment.FavoriteFragment;
-import com.example.moviecatalogue.view.fragment.FavoriteMovieFragment;
-import com.example.moviecatalogue.view.fragment.FavoriteTvShowFragment;
 import com.example.moviecatalogue.view.fragment.MovieFragment;
 import com.example.moviecatalogue.view.fragment.TvshowFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,10 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private String title = "";
     private Fragment fragment = new Fragment();
-    private MovieFragment movieFragment ;
-    private TvshowFragment tvshowFragment;
-    int navtab = 1;
-
     public static final String KEY_TITLE = "title";
     public static final String KEY_FRAGMENT = "fragment";
 

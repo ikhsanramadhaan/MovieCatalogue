@@ -1,10 +1,15 @@
-package com.example.moviecatalogue.view.fragment;
+package com.example.favoritecatalogue;
 
 
 import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,32 +18,19 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import com.example.favoritecatalogue.adapter.MovieAdapter;
 
-import com.example.moviecatalogue.R;
-import com.example.moviecatalogue.dbmovie.movie.FavoriteMovieHelper;
-import com.example.moviecatalogue.model.Film;
-import com.example.moviecatalogue.view.adapter.FavoriteMovieAdapter;
+import static com.example.favoritecatalogue.databases.DbContract.CONTENT_URI_MOVIE;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Objects;
-
-import static com.example.moviecatalogue.dbmovie.movie.DbContract.CONTENT_URI_MOVIE;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoriteMovieFragment extends Fragment{
+public class FavoriteMovieFragment extends Fragment {
     private RecyclerView listView;
-    private FavoriteMovieAdapter adapter;
+    private MovieAdapter adapter;
     private ProgressBar progressBar;
     private ProgressDialog dialog;
-    private FavoriteMovieHelper helper;
     private TextView textViewEmpty;
     private final static String LIST_STATE_KEY = "STATE";
     private Cursor list_movie;
@@ -58,16 +50,11 @@ public class FavoriteMovieFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         listView = view.findViewById(R.id.movie_list);
         progressBar = view.findViewById(R.id.favProgressBar);
         textViewEmpty = view.findViewById(R.id.textFav);
         dialog = new ProgressDialog(getContext());
         dialog.setMessage(getString(R.string.message));
-
-
-        helper = FavoriteMovieHelper.getInstance(getActivity());
-        helper.Open();
 
         progressBar.setVisibility(View.INVISIBLE);
         textViewEmpty.setVisibility(View.INVISIBLE);
@@ -76,8 +63,15 @@ public class FavoriteMovieFragment extends Fragment{
         showRecyclerMovie();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        new LoadFilmAsync().execute();
+        showRecyclerMovie();
+    }
+
     private void showRecyclerMovie() {
-        adapter = new FavoriteMovieAdapter(getContext());
+        adapter = new MovieAdapter(getContext());
         listView.setLayoutManager(new LinearLayoutManager(getContext()));
         listView.setHasFixedSize(true);
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.HORIZONTAL);
@@ -85,13 +79,6 @@ public class FavoriteMovieFragment extends Fragment{
         adapter.setMovie_cursor(list_movie);
         listView.setAdapter(adapter);
 
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        new LoadFilmAsync().execute();
-        showRecyclerMovie();
     }
 
 

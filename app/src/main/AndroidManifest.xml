@@ -3,6 +3,17 @@
     package="com.example.moviecatalogue">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <permission
+        android:name="com.example.moviecatalogue.WRITE_DATABASE"
+        android:label="Write Database"
+        android:exported="true"
+        android:protectionLevel="normal" />
+
+    <permission
+        android:name="com.example.moviecatalogue.READ_DATABASE"
+        android:label="Read Database"
+        android:exported="true"
+        android:protectionLevel="normal" />
 
     <application
         android:allowBackup="true"
@@ -46,6 +57,7 @@
             android:name=".dbmovie.movie.MyProvider"
             android:authorities="com.example.moviecatalogue"
             android:exported="true"
+            android:enabled="true"
             android:readPermission="com.example.moviecatalogue.READ_DATABASE"
             android:writePermission="com.example.moviecatalogue.WRITE_DATABASE" />
     </application>
