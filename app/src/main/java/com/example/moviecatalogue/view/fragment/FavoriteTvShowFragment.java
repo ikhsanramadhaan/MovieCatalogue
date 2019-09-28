@@ -24,10 +24,8 @@ import com.example.moviecatalogue.dbmovie.movie.FavoriteTvHelper;
 import com.example.moviecatalogue.model.TvShow;
 import com.example.moviecatalogue.view.adapter.FavoriteTvAdapter;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import static com.example.moviecatalogue.dbmovie.movie.DbContract.CONTENT_URI_MOVIE;
 import static com.example.moviecatalogue.dbmovie.movie.DbContract.CONTENT_URI_TV;
 
 /**

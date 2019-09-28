@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.model.TvShow;
-import com.example.moviecatalogue.view.activity.DetailMovieActivity;
 import com.example.moviecatalogue.view.activity.DetailTvActivity;
 import com.squareup.picasso.Picasso;
 

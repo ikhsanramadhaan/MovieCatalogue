@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     private Context context;
     private Cursor movie_cursor;
+    public static final String POSTER_PATH ="https://image.tmdb.org/t/p/w342/";
 
     public MovieAdapter(Context context) {
         this.context = context;
@@ -46,7 +47,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         final Film film = getItem(position);
         holder.txtjudul.setText(film.getTitle());
         holder.txtDescription.setText(film.getOverview());
-        Picasso.get().load( film.getPosterPath()).into(holder.imgPhoto);
+        Picasso.get().load(POSTER_PATH+film.getPosterPath()).into(holder.imgPhoto);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -10,9 +10,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.view.fragment.FavoriteMovieFragment;
 import com.example.moviecatalogue.view.fragment.FavoriteTvShowFragment;
-import com.example.moviecatalogue.view.fragment.MovieFragment;
-import com.example.moviecatalogue.view.fragment.TvshowFragment;
-
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     private Context mContext;
     public ViewPagerAdapter(FragmentManager fm, Context context) {

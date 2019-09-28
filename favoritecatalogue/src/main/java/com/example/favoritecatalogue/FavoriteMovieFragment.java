@@ -32,7 +32,6 @@ public class FavoriteMovieFragment extends Fragment {
     private ProgressBar progressBar;
     private ProgressDialog dialog;
     private TextView textViewEmpty;
-    private final static String LIST_STATE_KEY = "STATE";
     private Cursor list_movie;
 
     public FavoriteMovieFragment() {

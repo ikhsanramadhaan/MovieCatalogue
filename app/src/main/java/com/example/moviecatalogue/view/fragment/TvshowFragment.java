@@ -2,15 +2,7 @@ package com.example.moviecatalogue.view.fragment;
 
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,10 +11,15 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.base.api.ApiInterface;
 import com.example.moviecatalogue.base.networks.ApiClient;
-import com.example.moviecatalogue.model.MovieResult;
 import com.example.moviecatalogue.model.TvResult;
 import com.example.moviecatalogue.model.TvShow;
 import com.example.moviecatalogue.view.adapter.ListViewTvAdapter;

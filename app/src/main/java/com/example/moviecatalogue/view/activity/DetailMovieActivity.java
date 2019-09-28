@@ -1,8 +1,5 @@
 package com.example.moviecatalogue.view.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.ContentValues;
@@ -15,6 +12,9 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.dbmovie.movie.FavoriteMovieHelper;
@@ -37,8 +37,8 @@ public class DetailMovieActivity extends AppCompatActivity {
     private FavoriteMovieHelper helper;
     private boolean isFavorite = false;
     private Menu mMenu = null;
-    private Film film;
     private int movieId;
+    private Film film;
     private String  judul, tahun, deskripsi,poster;
     private Double rating, popularity;
 

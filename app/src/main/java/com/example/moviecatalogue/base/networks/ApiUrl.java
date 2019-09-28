@@ -1,6 +1,5 @@
 package com.example.moviecatalogue.base.networks;
 
-import android.os.Build;
 
 import com.example.moviecatalogue.BuildConfig;
 

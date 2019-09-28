@@ -12,16 +12,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.favoritecatalogue.DetailActivityMovie;
 import com.example.favoritecatalogue.DetailActivityTvShow;
 import com.example.favoritecatalogue.R;
-import com.example.favoritecatalogue.model.Film;
 import com.example.favoritecatalogue.model.TvShow;
 import com.squareup.picasso.Picasso;
 
 public class TvAdapter extends RecyclerView.Adapter<TvAdapter.ViewHolder> {
     private Cursor cursor;
     private Context context;
+    public static final String POSTER_PATH ="https://image.tmdb.org/t/p/w342/";
 
     public TvAdapter(Context context) {
         this.context = context;
@@ -49,7 +48,7 @@ public class TvAdapter extends RecyclerView.Adapter<TvAdapter.ViewHolder> {
         final TvShow tvShow = getItem(position);
         holder.txtjudul.setText(tvShow.getOriginal_name());
         holder.txtDescription.setText(tvShow.getOverview());
-        Picasso.get().load( tvShow.getPoster_path()).into(holder.imgPhoto);
+        Picasso.get().load( POSTER_PATH+tvShow.getPoster_path()).into(holder.imgPhoto);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

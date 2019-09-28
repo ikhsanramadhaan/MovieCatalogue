@@ -2,16 +2,14 @@ package com.example.moviecatalogue.view.fragment;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TableLayout;
 
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.view.adapter.ViewPagerAdapter;

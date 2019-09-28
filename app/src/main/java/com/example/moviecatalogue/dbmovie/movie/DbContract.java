@@ -1,6 +1,5 @@
 package com.example.moviecatalogue.dbmovie.movie;
 
-import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;

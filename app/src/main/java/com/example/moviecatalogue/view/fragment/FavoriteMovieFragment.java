@@ -5,6 +5,11 @@ import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,20 +18,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
 import com.example.moviecatalogue.R;
 import com.example.moviecatalogue.dbmovie.movie.FavoriteMovieHelper;
-import com.example.moviecatalogue.model.Film;
 import com.example.moviecatalogue.view.adapter.FavoriteMovieAdapter;
-
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Objects;
 
 import static com.example.moviecatalogue.dbmovie.movie.DbContract.CONTENT_URI_MOVIE;
 
@@ -92,6 +86,7 @@ public class FavoriteMovieFragment extends Fragment{
         super.onResume();
         new LoadFilmAsync().execute();
         showRecyclerMovie();
+
     }
 
 

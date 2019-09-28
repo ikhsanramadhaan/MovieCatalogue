@@ -123,12 +123,12 @@ public class TvShow implements Parcelable {
 
     public TvShow(Cursor cursor) {
         this.id = getColumnInt(cursor, _ID);
-        this.original_name = getColumnString(cursor, COLUMN_ORIGINAL_NAME_TV );;
-        this.overview = getColumnString(cursor, COLUMN_OVERVIEW_TV);;
-        this.poster_path = getColumnString(cursor, COLUMN_POSTER_PATH_TV);;
-        this.first_air_date = getColumnString(cursor, COLUMN_RELEASE_DATE_TV);;
-        this.voteAverage = getColumnDouble(cursor, COLUMN_VOTE_AVERAGE_TV);;
-        this.popularity = getColumnDouble(cursor, COLUMN_POPULARITY_TV);;
+        this.original_name = getColumnString(cursor, COLUMN_ORIGINAL_NAME_TV );
+        this.overview = getColumnString(cursor, COLUMN_OVERVIEW_TV);
+        this.poster_path = getColumnString(cursor, COLUMN_POSTER_PATH_TV);
+        this.first_air_date = getColumnString(cursor, COLUMN_RELEASE_DATE_TV);
+        this.voteAverage = getColumnDouble(cursor, COLUMN_VOTE_AVERAGE_TV);
+        this.popularity = getColumnDouble(cursor, COLUMN_POPULARITY_TV);
     }
 
     protected TvShow(Parcel in) {

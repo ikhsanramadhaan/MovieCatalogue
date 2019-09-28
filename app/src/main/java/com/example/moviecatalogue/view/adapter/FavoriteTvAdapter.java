@@ -17,7 +17,6 @@ import com.example.moviecatalogue.model.TvShow;
 import com.example.moviecatalogue.view.activity.DetailTvActivity;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 
 import static com.example.moviecatalogue.base.networks.ApiUrl.POSTER_PATH;
 
